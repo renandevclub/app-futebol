@@ -1,0 +1,82 @@
+[build]
+  # Projeto estático puro - sem build step
+  publish = "."
+
+# ===== HEADERS DE SEGURANÇA =====
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Cache agressivo para assets estáticos (imagens, fontes)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache para CSS e JS (com hash busting via query string)
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# HTML - sem cache forte para permitir atualizações
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ===== REDIRECIONAMENTOS =====
+# Redireciona rotas sem .html para os arquivos correspondentes (clean URLs)
+[[redirects]]
+  from = "/admin-placar"
+  to = "/pages/admin-placar.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/pages/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/detalhes"
+  to = "/pages/details.html"
+  status = 200
+
+[[redirects]]
+  from = "/financeiro"
+  to = "/pages/financials.html"
+  status = 200
+
+[[redirects]]
+  from = "/perfil"
+  to = "/pages/profile.html"
+  status = 200
+
+[[redirects]]
+  from = "/registro"
+  to = "/pages/register.html"
+  status = 200
+
+[[redirects]]
+  from = "/agenda"
+  to = "/pages/schedule.html"
+  status = 200
+
+[[redirects]]
+  from = "/inicio"
+  to = "/pages/welcome.html"
+  status = 200
+
+[[redirects]]
+  from = "/placar"
+  to = "/placar-ao-vivo.html"
+  status = 200

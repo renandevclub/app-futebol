@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalhes da Partida - Agenda Partida</title>
+    <!-- CSS Global e da Página de Detalhes -->
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/details.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+  </head>
+  <body>
+    <header
+      class="main-header"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 15px">
+        <a
+          href="dashboard.html"
+          title="Voltar"
+          style="
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+          "
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <h1 id="page-header-title">Detalhes da Partida</h1>
+      </div>
+      <nav class="main-nav" aria-label="Menu principal">
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-buttons-container">
+          <a href="dashboard.html" class="nav-button nav-back">
+            <span class="nav-icon">←</span>
+            <span class="nav-text">Voltar</span>
+          </a>
+          <a href="welcome.html" class="nav-button nav-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Início</span>
+          </a>
+          <a href="profile.html" class="nav-button nav-profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Meu Perfil</span>
+          </a>
+          <a href="#" target="_blank" class="nav-button nav-whatsapp">
+            <span class="nav-icon">💬</span>
+            <span class="nav-text">WhatsApp Admin</span>
+          </a>
+          <a href="../index.html" class="nav-button nav-logout">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Sair</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="details-container">
+      <!-- Seção 1: Informações da Partida -->
+      <section id="match-info-card" class="card">
+        <div id="match-info"></div>
+        <!-- Seção de Ações do Jogador -->
+        <div class="action-buttons" style="margin-top: 20px"></div>
+      </section>
+
+      <!-- Seção 2: Lista de Jogadores -->
+      <section id="player-list-card" class="card">
+        <h3>Jogadores Confirmados</h3>
+        <div id="player-list"></div>
+      </section>
+
+      <!-- Seção 3: Resumo Financeiro (COM O ID CORRETO) -->
+      <section id="financial-summary-card" class="card">
+        <h3>Resumo Financeiro</h3>
+        <div id="financial-summary">
+          <p>
+            <strong>Jogadores Pagantes:</strong>
+            <span id="paid-count">0 / 0</span>
+          </p>
+          <p>
+            <strong>Valor Arrecadado:</strong>
+            <span id="collected-amount">R$ 0,00 / R$ 0,00</span>
+          </p>
+        </div>
+        <!-- O JS injetará o botão de resumo financeiro aqui -->
+        <div
+          id="financial-btn-container"
+          style="margin-top: 20px; text-align: center"
+        ></div>
+      </section>
+
+      <!-- Seção 5: Controles do Administrador -->
+      <section id="admin-controls" class="card" style="display: none">
+        <h3>Controles do Administrador</h3>
+        <div class="admin-buttons-container"></div>
+      </section>
+
+      <!-- Seção 6: Votação Pós-Jogo -->
+      <section id="voting-section" class="card" style="display: none">
+        <h2>🏆 Votação Pós-Jogo 🏆</h2>
+        <div class="voting-container">
+          <div class="vote-category">
+            <h3>Craque da Partida ⭐</h3>
+            <div id="best-player-votes" class="vote-list"></div>
+          </div>
+          <div class="vote-category">
+            <h3>Perna de Pau 🪵</h3>
+            <div id="worst-player-votes" class="vote-list"></div>
+          </div>
+        </div>
+        <p id="vote-message" class="vote-message"></p>
+      </section>
+    </main>
+
+    <!-- Caminhos corrigidos para os scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/details.js"></script>
+  </body>
+</html>

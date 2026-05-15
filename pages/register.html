@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - Tá na Hora do Futebol</title>
+    <!-- CSS Global e da Página de Cadastro -->
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/register.css" />
+  </head>
+  <body class="register-page">
+    <div class="register-page-container">
+      <div class="register-box" style="position: relative; padding-top: 50px">
+        <a
+          href="../index.html"
+          title="Voltar ao Login"
+          style="
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+          "
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Voltar
+        </a>
+        <img
+          src="../assets/images/emblema-castor.png"
+          alt="Logo Futebol do Líder"
+          class="register-logo"
+        />
+        <h2>Criar Nova Conta</h2>
+        <p class="register-subtitle">Junte-se ao time e comece a jogar.</p>
+
+        <form id="register-form" class="form-grid">
+          <div class="input-group">
+            <label for="new-fullname">Nome Completo</label>
+            <input
+              type="text"
+              id="new-fullname"
+              name="new-fullname"
+              placeholder="Nome e sobrenome"
+              required
+              autocomplete="name"
+            />
+          </div>
+          <div class="input-group">
+            <label for="new-username">Apelido (Usuário)</label>
+            <input
+              type="text"
+              id="new-username"
+              name="new-username"
+              placeholder="Como te chamam no grupo"
+              required
+              autocomplete="username"
+            />
+          </div>
+          <div class="input-group full-width">
+            <label for="new-email">E-mail</label>
+            <input
+              type="email"
+              id="new-email"
+              name="new-email"
+              placeholder="seu@email.com"
+              required
+              autocomplete="email"
+            />
+          </div>
+          <div class="input-group full-width">
+            <label for="new-phone"
+              >Celular
+              <span style="opacity: 0.5; font-size: 0.75rem"
+                >(opcional)</span
+              ></label
+            >
+            <input
+              type="tel"
+              id="new-phone"
+              name="new-phone"
+              placeholder="(91) 99999-9999"
+              autocomplete="tel"
+            />
+          </div>
+          <div class="input-group">
+            <label for="new-password">Senha</label>
+            <input
+              type="password"
+              id="new-password"
+              name="new-password"
+              placeholder="Mínimo 6 caracteres"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="input-group">
+            <label for="confirm-password">Confirmar Senha</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              placeholder="Repita a senha"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+
+          <div class="password-requirements" id="password-req-box">
+            <h4>Requisitos da Senha:</h4>
+            <ul>
+              <li id="req-length">Pelo menos 6 caracteres</li>
+              <li id="req-match">As senhas devem coincidir</li>
+            </ul>
+          </div>
+
+          <div class="full-width">
+            <button
+              type="submit"
+              id="register-btn"
+              class="btn btn-primary"
+              disabled
+            >
+              <span>Confirmar Cadastro</span>
+            </button>
+            <div id="register-error-message" class="error-message"></div>
+          </div>
+        </form>
+
+        <div class="login-link">
+          <p>Já está convocado? <a href="../index.html">Vá para o Login</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/register.js"></script>
+  </body>
+</html>

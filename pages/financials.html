@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resumo Financeiro - Agenda Partida</title>
+    <!-- CSS Global e da Página Financeira -->
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/financials.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+  </head>
+  <body>
+    <header
+      class="main-header"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 15px">
+        <a
+          href="details.html"
+          title="Voltar"
+          style="
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+          "
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <h1 style="font-size: 1.2rem; margin: 0; color: var(--text-main)">
+          Financeiro
+        </h1>
+      </div>
+      <nav class="main-nav dashboard-nav" aria-label="Menu principal">
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-buttons-container">
+          <a href="welcome.html" class="nav-button nav-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Início</span>
+          </a>
+          <a href="dashboard.html" class="nav-button nav-matches">
+            <span class="nav-icon">⚽</span>
+            <span class="nav-text">Partidas</span>
+          </a>
+          <a href="profile.html" class="nav-button nav-profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Meu Perfil</span>
+          </a>
+          <a href="#" target="_blank" class="nav-button nav-whatsapp">
+            <span class="nav-icon">💬</span>
+            <span class="nav-text">WhatsApp Admin</span>
+          </a>
+          <a href="../index.html" class="nav-button nav-logout">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Sair</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="details-container">
+      <!-- Informações da Partida -->
+      <section class="card match-info-card">
+        <div class="match-info-header">
+          <h2>📅 Detalhes da Partida</h2>
+        </div>
+        <div id="match-header-info" class="match-details-content">
+          <!-- Ex: Partida em Arena Prime no dia 25/08/2025 -->
+        </div>
+      </section>
+
+      <!-- Balanço Geral -->
+      <section class="card financial-balance-card">
+        <div class="balance-header">
+          <h2>💰 Resumo Final</h2>
+        </div>
+        <div class="balance-content">
+          <div class="balance-item revenue-item">
+            <div class="balance-label">
+              <span class="balance-icon">📈</span>
+              <span>Coleta (Jogadores)</span>
+            </div>
+            <strong id="total-revenue" class="revenue">R$ 0,00</strong>
+          </div>
+          <div class="balance-item expense-item">
+            <div class="balance-label">
+              <span class="balance-icon">📉</span>
+              <span>Total de Despesas</span>
+            </div>
+            <strong id="total-expenses" class="expenses">R$ 0,00</strong>
+          </div>
+          <hr class="balance-divider" />
+          <div class="balance-item final-balance-item">
+            <div class="balance-label">
+              <span class="balance-icon">💵</span>
+              <span>Saldo Final</span>
+            </div>
+            <strong id="final-balance" class="final-balance-value"
+              >R$ 0,00</strong
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Lista de Despesas -->
+      <section class="card expenses-section">
+        <div class="expenses-header">
+          <h3>📋 Despesas da Partida</h3>
+        </div>
+        <div id="expenses-list" class="expenses-list-content">
+          <!-- Despesas serão listadas aqui -->
+        </div>
+      </section>
+
+      <!-- Formulário para Adicionar Despesa (Admin) -->
+      <section class="card add-expense-section">
+        <div class="add-expense-header">
+          <h3>➕ Adicionar Nova Despesa</h3>
+        </div>
+        <form id="add-expense-form" class="add-expense-form">
+          <div class="input-group">
+            <label for="expense-description">📝 Descrição</label>
+            <input
+              type="text"
+              id="expense-description"
+              placeholder="Ex: Aluguel da quadra"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="expense-value">💲 Valor (R$)</label>
+            <input
+              type="number"
+              id="expense-value"
+              step="0.01"
+              placeholder="Ex: 150.00"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary add-expense-btn">
+            Adicionar Despesa
+          </button>
+        </form>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ===== SEÇÃO DE DÚVIDAS PARA JOGADORES ===== -->
+      <!-- ================================================== -->
+      <section id="player-feedback-section" class="card" style="display: none">
+        <h3>Dúvidas sobre as Finanças?</h3>
+        <p>
+          Se tiver alguma pergunta sobre as despesas ou o coleta, envie uma
+          mensagem diretamente para o administrador.
+        </p>
+        <form id="player-feedback-form">
+          <div class="input-group">
+            <label for="feedback-message">Sua Mensagem</label>
+            <textarea
+              id="feedback-message"
+              rows="4"
+              placeholder="Digite sua pergunta ou observação aqui..."
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Enviar para o WhatsApp do Admin
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Caminhos corrigidos para os scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/financials.js"></script>
+  </body>
+</html>

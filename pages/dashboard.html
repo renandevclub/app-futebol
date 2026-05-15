@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Agenda Partida</title>
+    <!-- CSS Global e da Página do Dashboard -->
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/dashboard.css" />
+    <!-- CSS do Menu de Navegação -->
+    <link rel="stylesheet" href="../css/navigation.css" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header
+      class="main-header"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 15px">
+        <a
+          href="welcome.html"
+          title="Voltar"
+          style="
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+          "
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <h1 style="font-size: 1.2rem; margin: 0; color: var(--text-main)">
+          Partidas
+        </h1>
+      </div>
+      <nav class="main-nav" aria-label="Menu principal">
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-buttons-container">
+          <a href="welcome.html" class="nav-button nav-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Início</span>
+          </a>
+
+          <a href="profile.html" class="nav-button nav-profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Meu Perfil</span>
+          </a>
+
+          <a
+            href="schedule.html"
+            class="nav-button nav-schedule"
+            data-admin-only
+          >
+            <span class="nav-icon">📅</span>
+            <span class="nav-text">Agendar</span>
+          </a>
+
+          <a
+            href="admin-placar.html"
+            class="nav-button nav-schedule"
+            data-admin-only
+          >
+            <span class="nav-icon">🔴</span>
+            <span class="nav-text">Placar Ao Vivo</span>
+          </a>
+
+          <a href="#" target="_blank" class="nav-button nav-whatsapp">
+            <span class="nav-icon">💬</span>
+            <span class="nav-text">WhatsApp Admin</span>
+          </a>
+          <a href="../index.html" class="nav-button nav-logout">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Sair</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="dashboard-container">
+      <!-- PAINEL DE ATIVIDADE DO ADMIN -->
+      <section id="admin-activity-panel" class="card" style="display: none">
+        <div class="activity-header">
+          <h3>Painel do Administrador</h3>
+          <button id="toggle-activity-btn" class="btn btn-secondary">
+            Ver Atividade
+          </button>
+        </div>
+        <div id="activity-log-list" style="display: none">
+          <p><strong>Últimos Logins:</strong></p>
+          <ul></ul>
+        </div>
+      </section>
+
+      <!-- BOTÃO DE AÇÃO PARA O ADMIN -->
+      <div id="admin-actions" class="admin-actions" style="display: none">
+        <a href="schedule.html" class="btn btn-primary" data-admin-only
+          >Agendar Nova Partida</a
+        >
+        <a href="admin-placar.html" class="btn btn-danger" data-admin-only
+          >🔴 Placar Ao Vivo</a
+        >
+      </div>
+
+      <!-- Seção do Histórico de Partidas -->
+      <section class="match-history-section">
+        <h2>Próximas Partidas</h2>
+        <div id="match-list" class="match-list-container">
+          <!-- As partidas serão carregadas aqui pelo JavaScript -->
+        </div>
+      </section>
+
+      <!-- Seção de Classificação (Standings) -->
+      <section id="dash-standings-section" class="match-history-section">
+        <h2>
+          <i class="fas fa-trophy" style="color: #f59e0b; margin-right: 8px"></i>
+          Classificação
+        </h2>
+        <div class="dash-standings-filter">
+          <label class="filter-group" style="margin-bottom: 0">
+            <select id="dash-standings-select" class="filter-select" style="min-width: 260px">
+              <option value="">— Escolha uma competição —</option>
+            </select>
+          </label>
+        </div>
+        <div id="dash-standings-container">
+          <p style="color:var(--text-muted);text-align:center;padding:20px 0;font-size:0.85rem">
+            Selecione uma competição para ver a classificação.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Caminhos corrigidos para os scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/voting-notification.js"></script>
+    <script src="../js/dashboard.js"></script>
+  </body>
+</html>

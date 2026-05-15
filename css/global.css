@@ -1,0 +1,429 @@
+/* =================================================================== */
+/* ===== DESIGN SYSTEM GLOBAL - FUTEBOL MILHÃO ===== */
+/* =================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap");
+
+/* ===== Variáveis do Tema ===== */
+:root {
+  --bg-base: #0f172a;
+  --bg-surface: rgba(15, 23, 42, 0.6);
+  --bg-card: rgba(30, 41, 59, 0.5);
+  --bg-card-hover: rgba(30, 41, 59, 0.8);
+  --bg-input: rgba(0, 0, 0, 0.25);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-focus: rgba(16, 185, 129, 0.5);
+
+  --text-main: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-green: #10b981;
+  --accent-green-hover: #059669;
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-red: #ef4444;
+  --accent-yellow: #f59e0b;
+  --accent-purple: #8b5cf6;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --team-dot-size: 12px;
+}
+
+/* ===== Tema Claro ===== */
+[data-theme="light"] {
+  --bg-base: #f1f5f9;
+  --bg-surface: rgba(255, 255, 255, 0.85);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-input: rgba(0, 0, 0, 0.04);
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --border-focus: rgba(16, 185, 129, 0.35);
+
+  --text-main: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --accent-green: #059669;
+  --accent-green-hover: #047857;
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-red: #dc2626;
+  --accent-yellow: #d97706;
+  --accent-purple: #7c3aed;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Body Base ===== */
+body {
+  font-family:
+    "Outfit",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Links ===== */
+a {
+  color: var(--accent-green);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #34d399;
+}
+
+/* ===== Componentes: Cards ===== */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 25px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.card:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== Componentes: Inputs ===== */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--bg-input);
+  color: var(--text-main);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px var(--border-focus);
+}
+
+/* ===== Componentes: Botões ===== */
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--accent-green) 0%,
+    var(--accent-green-hover) 100%
+  );
+  color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--accent-red), #dc2626);
+  color: white;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--border-medium);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+.btn-cancel {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+.btn-reschedule {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #1e293b;
+}
+
+.back-button {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ===== Layout: Header (Removido para usar navigation.css) ===== */
+/* A estrutura do menu agora é gerenciada exclusivamente pelo navigation.css (Sidebar/Off-canvas) */
+
+/* ===== Layout: Footer ===== */
+.main-footer {
+  background: rgba(2, 6, 23, 0.8);
+  backdrop-filter: blur(10px);
+  color: var(--text-secondary);
+  padding: 30px 20px;
+  text-align: center;
+  margin-top: 50px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ===== Team Dot Styling ===== */
+.match-team-chip,
+.player-team-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 11px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.team-dot,
+.scratch-team-dot {
+  display: inline-flex;
+  width: var(--team-dot-size);
+  height: var(--team-dot-size);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.match-team-chip {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.player-team-badge.unassigned {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.footer-logo-player {
+  width: 300px;
+  margin-bottom: 12px;
+  opacity: 1;
+}
+.main-footer p {
+  margin: 5px 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.main-footer p:first-of-type {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ===== Mensagens ===== */
+.error-message {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  display: none;
+}
+
+.success-message {
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* ===== Responsividade Global ===== */
+@media (max-width: 768px) {
+  .card {
+    padding: 20px;
+  }
+  .modal-content {
+    margin: 20px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logout-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== Overrides Tema Claro ===== */
+[data-theme="light"] .main-header {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .main-header h1 {
+  color: var(--text-main);
+}
+[data-theme="light"] .nav-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1e293b;
+}
+[data-theme="light"] .nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .nav-buttons-container {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: -4px 8px 24px rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .nav-button {
+  color: var(--text-secondary);
+}
+[data-theme="light"] .nav-button:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-main);
+}
+[data-theme="light"] .nav-logout {
+  border-top-color: rgba(0, 0, 0, 0.06);
+  color: #dc2626;
+}
+[data-theme="light"] .nav-logout:hover {
+  background: rgba(239, 68, 68, 0.06);
+}
+[data-theme="light"] .main-footer {
+  background: rgba(255, 255, 255, 0.8);
+  border-top-color: rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .error-message {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.15);
+}
+[data-theme="light"] .success-message {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+[data-theme="light"] .btn-secondary {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-main);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+[data-theme="light"] .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .match-team-chip,
+[data-theme="light"] .player-team-badge {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .input-group select option {
+  background: #fff;
+  color: #1e293b;
+}
+
+/* Botão de tema no menu */
+.nav-theme-toggle {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+[data-theme="light"] .nav-theme-toggle {
+  border-top-color: rgba(0, 0, 0, 0.06);
+}

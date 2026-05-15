@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Placar Ao Vivo</title>
+    <meta
+      name="description"
+      content="Painel de administração do placar ao vivo - Gerenciamento completo de partidas em tempo real."
+    />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/admin-placar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="admin-placar-page">
+    <!-- Header -->
+    <header class="adm-header">
+      <div class="adm-header-left">
+        <img
+          src="../assets/images/emblema-castor.png"
+          alt="Logo"
+          class="adm-header-logo"
+        />
+        <span class="adm-header-title">Placar Ao Vivo</span>
+        <span class="adm-header-badge">Admin</span>
+      </div>
+      <a href="welcome.html" class="adm-back-link">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </a>
+    </header>
+
+    <div class="adm-container">
+      <!-- ===== SEÇÃO 0: Conexão em tempo real ===== -->
+      <div id="adm-sync-bar" class="adm-sync-bar">
+        <span class="adm-sync-dot"></span>
+        <span id="adm-sync-text">Conectando...</span>
+      </div>
+
+      <!-- ===== SEÇÃO 1: Seleção de Partida ===== -->
+      <section id="adm-config" class="adm-section">
+        <div class="adm-section-title">
+          <i class="fas fa-futbol"></i> Configurar Partida ao Vivo
+        </div>
+
+        <!-- Dropdown de partida cadastrada -->
+        <div class="adm-form-group full" style="margin-bottom: 16px">
+          <label class="adm-label"
+            >Vincular a uma partida cadastrada (opcional)</label
+          >
+          <select id="adm-select-match" class="adm-select">
+            <option value="">— Partida manual (sem vínculo) —</option>
+          </select>
+          <div
+            id="adm-match-info"
+            class="adm-match-info"
+            style="display: none"
+          ></div>
+        </div>
+
+        <div class="adm-form-grid">
+          <div class="adm-form-group">
+            <label class="adm-label">Escolha o Time 1</label>
+            <select
+              id="adm-time1-select"
+              class="adm-select"
+              style="margin-bottom: 5px; display: none"
+            >
+              <option value="manual">Digitar manualmente...</option>
+            </select>
+            <input
+              type="text"
+              id="adm-time1-nome"
+              class="adm-input"
+              placeholder="Ex: Pelé FC"
+            />
+          </div>
+          <div class="adm-form-group">
+            <label class="adm-label">Escolha o Time 2</label>
+            <select
+              id="adm-time2-select"
+              class="adm-select"
+              style="margin-bottom: 5px; display: none"
+            >
+              <option value="manual">Digitar manualmente...</option>
+            </select>
+            <input
+              type="text"
+              id="adm-time2-nome"
+              class="adm-input"
+              placeholder="Ex: Zico United"
+            />
+          </div>
+        </div>
+
+        <button id="adm-btn-iniciar" class="adm-btn adm-btn-green adm-btn-full">
+          <i class="fas fa-play"></i> Iniciar Partida
+        </button>
+      </section>
+
+      <!-- ===== SEÇÃO 2: Partida Ao Vivo ===== -->
+      <section id="adm-live" class="hidden">
+        <!-- Status + Período + Cronômetro -->
+        <div class="adm-section">
+          <div class="adm-live-top">
+            <div id="adm-status" class="adm-status live">
+              <span class="adm-status-pulse"></span> AO VIVO
+            </div>
+            <div class="adm-periodo-selector">
+              <button id="adm-periodo-1t" class="adm-periodo-btn active">
+                1T
+              </button>
+              <button id="adm-periodo-2t" class="adm-periodo-btn">2T</button>
+              <button id="adm-periodo-pr" class="adm-periodo-btn">PR</button>
+            </div>
+          </div>
+
+          <div class="adm-crono">
+            <div id="adm-cronometro" class="adm-crono-display">07:00</div>
+            <div class="adm-crono-btns">
+              <button id="adm-btn-play-pause" class="adm-btn adm-btn-blue">
+                <i class="fas fa-pause"></i>
+              </button>
+              <button id="adm-btn-reset" class="adm-btn adm-btn-gray">
+                <i class="fas fa-redo"></i> Resetar
+              </button>
+            </div>
+          </div>
+
+          <!-- Placar -->
+          <div class="adm-placar-grid">
+            <div class="adm-team">
+              <div id="adm-nome-time1" class="adm-team-name t1">Time 1</div>
+              <div id="adm-placar-time1" class="adm-score t1">0</div>
+              <div class="adm-score-btns">
+                <button id="adm-plus-t1" class="adm-score-btn plus">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button id="adm-minus-t1" class="adm-score-btn minus">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="adm-team" style="align-self: center">
+              <div class="adm-sep">×</div>
+            </div>
+
+            <div class="adm-team">
+              <div id="adm-nome-time2" class="adm-team-name t2">Time 2</div>
+              <div id="adm-placar-time2" class="adm-score t2">0</div>
+              <div class="adm-score-btns">
+                <button id="adm-plus-t2" class="adm-score-btn plus">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button id="adm-minus-t2" class="adm-score-btn minus">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Escalação -->
+        <div class="adm-section" id="adm-escalacao-section">
+          <div class="adm-section-title">
+            <i class="fas fa-users" style="color: var(--accent-blue)"></i>
+            Escalação
+            <button
+              id="adm-btn-add-jogador-manual"
+              class="adm-btn-mini adm-btn-blue"
+              title="Adicionar jogador manual"
+            >
+              <i class="fas fa-user-plus"></i>
+            </button>
+          </div>
+          <div class="adm-escalacao-grid">
+            <div class="adm-escalacao-card t1">
+              <div class="adm-escalacao-team-label" id="adm-esc-label-t1">
+                Time 1
+              </div>
+              <div id="adm-escalacao-t1" class="adm-escalacao-list"></div>
+            </div>
+            <div class="adm-escalacao-card t2">
+              <div class="adm-escalacao-team-label" id="adm-esc-label-t2">
+                Time 2
+              </div>
+              <div id="adm-escalacao-t2" class="adm-escalacao-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registrar Gols com autocomplete -->
+        <div class="adm-section">
+          <div class="adm-section-title">
+            <i class="fas fa-futbol" style="color: var(--accent-green)"></i>
+            Registrar Gol
+          </div>
+          <div class="adm-register-grid">
+            <div class="adm-register-card t1">
+              <div class="adm-register-label" id="adm-gol-label-t1">Time 1</div>
+              <div class="adm-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="adm-gol-jogador-t1"
+                  class="adm-input"
+                  placeholder="Nome do jogador"
+                  autocomplete="off"
+                />
+                <div id="adm-gol-suggest-t1" class="adm-suggest-list"></div>
+              </div>
+              <button
+                id="adm-btn-gol-t1"
+                class="adm-btn adm-btn-blue adm-btn-full"
+                style="margin-top: 8px"
+              >
+                <i class="fas fa-futbol"></i> Gol
+              </button>
+              <ul id="adm-gols-t1" class="adm-event-list"></ul>
+            </div>
+            <div class="adm-register-card t2">
+              <div class="adm-register-label" id="adm-gol-label-t2">Time 2</div>
+              <div class="adm-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="adm-gol-jogador-t2"
+                  class="adm-input"
+                  placeholder="Nome do jogador"
+                  autocomplete="off"
+                />
+                <div id="adm-gol-suggest-t2" class="adm-suggest-list"></div>
+              </div>
+              <button
+                id="adm-btn-gol-t2"
+                class="adm-btn adm-btn-red adm-btn-full"
+                style="margin-top: 8px"
+              >
+                <i class="fas fa-futbol"></i> Gol
+              </button>
+              <ul id="adm-gols-t2" class="adm-event-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registrar Cartões -->
+        <div class="adm-section">
+          <div class="adm-section-title">
+            <i class="fas fa-square" style="color: #facc15"></i> Cartões
+          </div>
+          <div class="adm-register-grid">
+            <div class="adm-register-card t1">
+              <div class="adm-register-label" id="adm-cartao-label-t1">
+                Time 1
+              </div>
+              <div class="adm-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="adm-cartao-jogador-t1"
+                  class="adm-input"
+                  placeholder="Nome do jogador"
+                  autocomplete="off"
+                />
+                <div id="adm-cartao-suggest-t1" class="adm-suggest-list"></div>
+              </div>
+              <div class="adm-cartao-btns">
+                <button
+                  id="adm-btn-cartao-amarelo-t1"
+                  class="adm-btn adm-btn-yellow adm-btn-half"
+                >
+                  🟨 Amarelo
+                </button>
+                <button
+                  id="adm-btn-cartao-vermelho-t1"
+                  class="adm-btn adm-btn-red adm-btn-half"
+                >
+                  🟥 Vermelho
+                </button>
+              </div>
+              <ul id="adm-cartoes-t1" class="adm-event-list"></ul>
+            </div>
+            <div class="adm-register-card t2">
+              <div class="adm-register-label" id="adm-cartao-label-t2">
+                Time 2
+              </div>
+              <div class="adm-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="adm-cartao-jogador-t2"
+                  class="adm-input"
+                  placeholder="Nome do jogador"
+                  autocomplete="off"
+                />
+                <div id="adm-cartao-suggest-t2" class="adm-suggest-list"></div>
+              </div>
+              <div class="adm-cartao-btns">
+                <button
+                  id="adm-btn-cartao-amarelo-t2"
+                  class="adm-btn adm-btn-yellow adm-btn-half"
+                >
+                  🟨 Amarelo
+                </button>
+                <button
+                  id="adm-btn-cartao-vermelho-t2"
+                  class="adm-btn adm-btn-red adm-btn-half"
+                >
+                  🟥 Vermelho
+                </button>
+              </div>
+              <ul id="adm-cartoes-t2" class="adm-event-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Substituições -->
+        <div class="adm-section">
+          <div class="adm-section-title">
+            <i
+              class="fas fa-exchange-alt"
+              style="color: var(--accent-purple)"
+            ></i>
+            Substituição
+          </div>
+          <div class="adm-register-grid">
+            <div class="adm-register-card t1">
+              <div class="adm-register-label" id="adm-sub-label-t1">Time 1</div>
+              <div class="adm-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="adm-sub-sai-t1"
+                  class="adm-input"
+                  placeholder="Jogador que sai"
+                  autocomplete="off"
+                />
+                <div id="adm-sub-sai-suggest-t1" class="adm-suggest-list"></div>
+              </div>
+              <div class="adm-autocomplete-wrap" style="margin-top: 6px">
+                <input
+                  type="text"
+                  id="adm-sub-entra-t1"
+                  class="adm-input"
+                  placeholder="Jogador que entra"
+                  autocomplete="off"
+                />
+              </div>
+              <button
+                id="adm-btn-sub-t1"
+                class="adm-btn adm-btn-purple adm-btn-full"
+                style="margin-top: 8px"
+              >
+                <i class="fas fa-exchange-alt"></i> Substituir
+              </button>
+            </div>
+            <div class="adm-register-card t2">
+              <div class="adm-register-label" id="adm-sub-label-t2">Time 2</div>
+              <div class="adm-autocomplete-wrap">
+                <input
+                  type="text"
+                  id="adm-sub-sai-t2"
+                  class="adm-input"
+                  placeholder="Jogador que sai"
+                  autocomplete="off"
+                />
+                <div id="adm-sub-sai-suggest-t2" class="adm-suggest-list"></div>
+              </div>
+              <div class="adm-autocomplete-wrap" style="margin-top: 6px">
+                <input
+                  type="text"
+                  id="adm-sub-entra-t2"
+                  class="adm-input"
+                  placeholder="Jogador que entra"
+                  autocomplete="off"
+                />
+              </div>
+              <button
+                id="adm-btn-sub-t2"
+                class="adm-btn adm-btn-purple adm-btn-full"
+                style="margin-top: 8px"
+              >
+                <i class="fas fa-exchange-alt"></i> Substituir
+              </button>
+            </div>
+          </div>
+          <div id="adm-substituicoes-lista" class="adm-subs-lista"></div>
+        </div>
+
+        <!-- Eventos Personalizados -->
+        <div class="adm-section">
+          <div class="adm-section-title">
+            <i class="fas fa-bullhorn" style="color: #f59e0b"></i> Evento
+            Personalizado
+          </div>
+          <div class="adm-form-group full">
+            <input
+              type="text"
+              id="adm-evento-texto"
+              class="adm-input"
+              placeholder="Ex: Pênalti defendido, Impedimento, VAR..."
+            />
+          </div>
+          <button
+            id="adm-btn-evento"
+            class="adm-btn adm-btn-yellow adm-btn-full"
+            style="margin-top: 10px"
+          >
+            <i class="fas fa-plus"></i> Adicionar Evento
+          </button>
+          <ul
+            id="adm-eventos-lista"
+            class="adm-event-list"
+            style="margin-top: 10px"
+          ></ul>
+        </div>
+
+        <!-- Observações -->
+        <div class="adm-section">
+          <div class="adm-section-title">
+            <i class="fas fa-sticky-note" style="color: var(--text-muted)"></i>
+            Observações
+          </div>
+          <textarea
+            id="adm-observacoes"
+            class="adm-textarea"
+            placeholder="Anotações do administrador..."
+          ></textarea>
+          <button
+            id="adm-btn-salvar-obs"
+            class="adm-btn adm-btn-gray adm-btn-full"
+            style="margin-top: 8px"
+          >
+            <i class="fas fa-save"></i> Salvar
+          </button>
+        </div>
+
+        <!-- Finalizar Partida -->
+        <div class="adm-section" style="text-align: center">
+          <button
+            id="adm-btn-finalizar"
+            class="adm-btn adm-btn-red adm-btn-full adm-btn-danger"
+          >
+            <i class="fas fa-flag-checkered"></i> Finalizar Partida
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== SEÇÃO 3: Histórico ===== -->
+      <section class="adm-section">
+        <div class="adm-section-title">
+          <i class="fas fa-history" style="color: var(--accent-purple)"></i>
+          Histórico de Partidas
+        </div>
+        <div class="adm-standings-filter">
+          <label class="adm-label">Selecione a competição:</label>
+          <select id="adm-historico-select" class="adm-select">
+            <option value="">— Escolha uma competição —</option>
+          </select>
+        </div>
+        <div id="adm-historico-lista">
+          <p
+            style="
+              color: var(--text-muted);
+              text-align: center;
+              padding: 20px 0;
+              font-size: 0.85rem;
+            "
+          >
+            Selecione uma competição para ver o histórico detalhado.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== SEÇÃO 4: Classificação (Standings) ===== -->
+      <section id="adm-standings-section" class="adm-section">
+        <div class="adm-section-title">
+          <i class="fas fa-trophy" style="color: #f59e0b"></i>
+          Classificação da Competição
+        </div>
+        <div class="adm-standings-filter">
+          <label class="adm-label">Selecione a competição:</label>
+          <select id="adm-standings-select" class="adm-select">
+            <option value="">— Escolha uma competição —</option>
+          </select>
+        </div>
+        <div id="adm-standings-container">
+          <p style="color:var(--text-muted);text-align:center;padding:20px 0;font-size:0.85rem">
+            Selecione uma competição para ver a classificação.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Modal para adicionar jogador manual -->
+    <div id="adm-modal-jogador" class="adm-modal-overlay hidden">
+      <div class="adm-modal-content">
+        <div class="adm-modal-header">
+          <h3><i class="fas fa-user-plus"></i> Adicionar Jogador</h3>
+          <button id="adm-modal-close" class="adm-modal-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="adm-form-group" style="margin-bottom: 12px">
+          <label class="adm-label">Nome do jogador</label>
+          <input
+            type="text"
+            id="adm-modal-jogador-nome"
+            class="adm-input"
+            placeholder="Nome completo"
+          />
+        </div>
+        <div class="adm-form-group" style="margin-bottom: 16px">
+          <label class="adm-label">Time</label>
+          <select id="adm-modal-jogador-time" class="adm-select">
+            <option value="time1">Time 1</option>
+            <option value="time2">Time 2</option>
+          </select>
+        </div>
+        <button
+          id="adm-modal-jogador-confirmar"
+          class="adm-btn adm-btn-green adm-btn-full"
+        >
+          <i class="fas fa-check"></i> Adicionar
+        </button>
+      </div>
+    </div>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/admin-placar.js"></script>
+  </body>
+</html>

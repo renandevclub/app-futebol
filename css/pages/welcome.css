@@ -1,0 +1,244 @@
+/* =================================================================== */
+/* ===== WELCOME PAGE - FUTEBOL MILHÃO ===== */
+/* =================================================================== */
+
+.welcome-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Apresentação */
+.presentation-section { margin-bottom: 30px; }
+.presentation-section h2 {
+    text-align: center; font-size: 1.8rem; margin-top: 0;
+    color: var(--text-main); margin-bottom: 10px;
+}
+.presentation-section p {
+    text-align: center; font-size: 1.05rem; color: var(--text-secondary);
+    line-height: 1.7; max-width: 620px; margin: 10px auto 20px;
+}
+
+/* Carrossel */
+.carousel-container {
+    width: 100%; overflow: hidden; border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md); margin-bottom: 30px; position: relative;
+    border: 1px solid var(--border-subtle);
+}
+.carousel-inner { display: flex; transition: transform 0.8s ease-in-out; }
+.carousel-item { min-width: 100%; aspect-ratio: 16 / 9; }
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.carousel-controls { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+.carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; }
+.carousel-dot.active { background: rgba(255,255,255,0.9); width: 28px; border-radius: 5px; }
+
+.carousel-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    color: white; border: 1px solid rgba(255,255,255,0.1);
+    width: 40px; height: 40px; border-radius: 50%;
+    cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+}
+.carousel-arrow:hover { background: rgba(0,0,0,0.7); }
+.carousel-arrow.prev { left: 15px; }
+.carousel-arrow.next { right: 15px; }
+
+/* Vídeo */
+.video-section { margin-bottom: 30px; }
+.video-section h3 { text-align: center; font-size: 1.6rem; color: var(--text-main); margin-top: 0; margin-bottom: 8px; }
+
+.video-container {
+    position: relative; overflow: hidden; width: 100%;
+    padding-top: 56.25%; border-radius: var(--radius-md);
+    background: #000; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-subtle);
+}
+.video-container iframe, .video-container video {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+}
+
+/* Ações */
+.welcome-actions { margin-top: 30px; text-align: center; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.welcome-actions .btn { min-width: 150px; padding: 12px 20px; }
+
+/* Stats */
+.group-stats {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main); padding: 30px; border-radius: var(--radius-lg);
+    margin: 30px 0; text-align: center; backdrop-filter: blur(8px);
+}
+.group-stats h3 { margin-top: 0; font-size: 1.4rem; margin-bottom: 20px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 16px; }
+.stat-item {
+    background: rgba(255,255,255,0.06); padding: 16px;
+    border-radius: var(--radius-md); border: 1px solid var(--border-subtle);
+}
+.stat-number { font-size: 2rem; font-weight: 700; display: block; margin-bottom: 4px; color: var(--accent-green); }
+.stat-label { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Próximas partidas */
+.upcoming-matches {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    padding: 25px; border-radius: var(--radius-lg); margin: 30px 0;
+}
+.upcoming-matches h3 { margin-top: 0; color: var(--text-main); font-size: 1.4rem; margin-bottom: 20px; text-align: center; }
+.match-preview {
+    border-left: 3px solid var(--accent-blue); padding: 14px;
+    margin-bottom: 12px; background: rgba(255,255,255,0.03);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.match-preview:last-child { margin-bottom: 0; }
+.match-date-preview { font-weight: 600; color: var(--accent-blue); margin-bottom: 4px; }
+.match-location-preview { color: var(--text-secondary); font-size: 0.9rem; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .welcome-container { margin: 15px auto; padding: 15px; }
+    .presentation-section h2 { font-size: 1.5rem; }
+    .presentation-section p { font-size: 1rem; }
+    .video-section h3 { font-size: 1.4rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .welcome-container { margin: 10px auto; padding: 10px; }
+    .presentation-section h2 { font-size: 1.3rem; }
+    .video-section h3 { font-size: 1.2rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-number { font-size: 1.5rem; }
+}
+
+/* =================================================================== */
+/* ===== Banner Destaque do WhatsApp ===== */
+/* =================================================================== */
+.whatsapp-highlight-section {
+    margin-bottom: 30px;
+}
+
+.whatsapp-banner {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+    border-radius: 20px;
+    padding: 24px;
+    gap: 20px;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+}
+
+.whatsapp-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+.whatsapp-banner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-banner:hover::before {
+    opacity: 1;
+}
+
+.whatsapp-icon-container {
+    background: white;
+    color: #25D366;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.whatsapp-content {
+    flex: 1;
+    color: white;
+}
+
+.whatsapp-content h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.whatsapp-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.btn-whatsapp-highlight {
+    background: white;
+    color: #128C7E;
+    padding: 14px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-whatsapp-highlight .btn-arrow {
+    transition: transform 0.3s;
+}
+
+.btn-whatsapp-highlight:hover {
+    background: #f8fafc;
+    transform: scale(1.05);
+    color: #075E54;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.btn-whatsapp-highlight:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+    .whatsapp-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+        gap: 16px;
+    }
+    .whatsapp-content h3 {
+        font-size: 1.25rem;
+    }
+    .btn-whatsapp-highlight {
+        width: 100%;
+        justify-content: center;
+    }
+}

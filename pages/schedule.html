@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agendar Nova Partida - Agenda Partida</title>
+    <!-- CSS Global e da Página de Agendamento -->
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/schedule.css" />
+    <!-- CSS do Menu de Navegação -->
+    <link rel="stylesheet" href="../css/navigation.css" />
+  </head>
+  <body>
+    <header
+      class="main-header"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 15px">
+        <a
+          href="welcome.html"
+          title="Voltar"
+          style="
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+          "
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <h1 style="font-size: 1.2rem; margin: 0; color: var(--text-main)">
+          Agendar
+        </h1>
+      </div>
+      <nav class="main-nav" aria-label="Menu principal">
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-buttons-container">
+          <a href="welcome.html" class="nav-button nav-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Início</span>
+          </a>
+          <a href="dashboard.html" class="nav-button nav-matches">
+            <span class="nav-icon">⚽</span>
+            <span class="nav-text">Partidas</span>
+          </a>
+          <a href="profile.html" class="nav-button nav-profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Meu Perfil</span>
+          </a>
+          <a href="#" target="_blank" class="nav-button nav-whatsapp">
+            <span class="nav-icon">💬</span>
+            <span class="nav-text">WhatsApp Admin</span>
+          </a>
+          <a href="../index.html" class="nav-button nav-logout">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Sair</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="schedule-container" style="margin-top: 100px">
+      <div class="schedule-header">
+        <h1
+          style="
+            color: var(--text-main);
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 10px;
+          "
+        >
+          ⚽ Agendar Nova Partida
+        </h1>
+        <p
+          style="
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+          "
+        >
+          Preencha os dados abaixo para criar uma nova partida
+        </p>
+      </div>
+
+      <div class="schedule-form">
+        <form id="schedule-form">
+          <div class="input-group">
+            <label for="match-title">🏆 Nome da Partida (Opcional)</label>
+            <input
+              type="text"
+              id="match-title"
+              placeholder="Ex: Amistoso de Domingo, Final do Campeonato..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label for="match-date">📅 Data da Partida</label>
+              <input type="date" id="match-date" required />
+            </div>
+
+            <div class="input-group">
+              <label for="match-time">🕐 Horário</label>
+              <input
+                type="time"
+                id="match-time"
+                style="
+                  width: 100%;
+                  padding: 12px 15px;
+                  border: 1px solid var(--border-medium);
+                  border-radius: var(--radius-sm);
+                  font-size: 1rem;
+                  background: var(--bg-input);
+                  color: var(--text-main);
+                  color-scheme: dark;
+                "
+                required
+              />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="match-location">📍 Local</label>
+            <select id="match-location" required>
+              <option value="">Selecione o local</option>
+              <option value="Prime Fut 7">Prime Fut 7</option>
+              <option value="Society Do Chocolate">Society Do Chocolate</option>
+              <option value="Outro">Outro (digite abaixo)</option>
+            </select>
+            <input
+              type="text"
+              id="match-location-custom"
+              placeholder="Digite o nome do local"
+              style="display: none; margin-top: 10px"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="match-fee">💰 Valor por Jogador (R$)</label>
+            <input
+              type="number"
+              id="match-fee"
+              step="0.01"
+              placeholder="Ex: 15.00"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="match-notes">📝 Observações (Opcional)</label>
+            <textarea
+              id="match-notes"
+              rows="4"
+              placeholder="Ex: Levar camisa branca e preta."
+            ></textarea>
+          </div>
+
+          <div class="input-group teams-form-group">
+            <div class="teams-form-header">
+              <label>🛡️ Times participantes</label>
+              <button
+                type="button"
+                class="btn btn-secondary btn-add-team"
+                id="add-team-btn"
+              >
+                Adicionar Time
+              </button>
+            </div>
+            <div id="match-teams-list" class="teams-input-list"></div>
+          </div>
+
+          <div
+            class="form-actions"
+            style="
+              display: flex;
+              gap: 15px;
+              justify-content: center;
+              margin-top: 30px;
+            "
+          >
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="
+                sessionStorage.removeItem('editMatchId');
+                window.location.href = 'dashboard.html';
+              "
+              style="min-width: 140px"
+            >
+              ← Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="min-width: 140px"
+            >
+              💾 Salvar Partida
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Caminhos corrigidos para os scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/schedule.js"></script>
+  </body>
+</html>

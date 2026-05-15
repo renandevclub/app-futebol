@@ -1,0 +1,77 @@
+/* =================================================================== */
+/* ===== OVERRIDES TEMA CLARO - PÁGINAS DE CONTEÚDO ===== */
+/* Arquivo centralizado para adaptar todas as páginas ao modo claro */
+/* =================================================================== */
+
+/* === WELCOME === */
+[data-theme="light"] .welcome-container .section-title { color: var(--text-main); }
+[data-theme="light"] .welcome-hero-overlay { background: rgba(255,255,255,0.85) !important; }
+[data-theme="light"] .welcome-event-card { background: rgba(255,255,255,0.7); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .welcome-event-card:hover { background: rgba(255,255,255,0.9); }
+[data-theme="light"] .welcome-stat-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .welcome-rule-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.06); }
+
+/* === DASHBOARD === */
+[data-theme="light"] .dash-card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .dash-card:hover { background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.1); }
+[data-theme="light"] .dash-match-card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .dash-match-card:hover { background: rgba(255,255,255,0.9); }
+[data-theme="light"] .dash-status-badge { color: #fff; }
+[data-theme="light"] .dash-admin-panel { background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.15); }
+[data-theme="light"] .dash-admin-panel h3 { color: #92400e; }
+
+/* === DETAILS === */
+[data-theme="light"] .detail-card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .detail-card:hover { background: rgba(255,255,255,0.9); }
+[data-theme="light"] .detail-info-row { border-bottom-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .detail-notes { background: rgba(59,130,246,0.04); border-color: rgba(59,130,246,0.1); }
+[data-theme="light"] .detail-player-item { border-bottom-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .detail-admin-section { background: rgba(239,68,68,0.03); border-color: rgba(239,68,68,0.1); }
+[data-theme="light"] .detail-action-btn { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .detail-action-btn:hover { background: rgba(0,0,0,0.08); }
+
+/* === SCHEDULE === */
+[data-theme="light"] .schedule-card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .schedule-team-item { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .schedule-team-item:hover { background: rgba(0,0,0,0.04); }
+
+/* === PROFILE === */
+[data-theme="light"] .profile-card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .profile-stat-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .profile-avatar-circle { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.15); }
+
+/* === FINANCIALS === */
+[data-theme="light"] .fin-card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .fin-card:hover { background: rgba(255,255,255,0.9); }
+[data-theme="light"] .fin-player-row { border-bottom-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .fin-summary-card { background: rgba(255,255,255,0.7); border-color: rgba(0,0,0,0.06); }
+
+/* === PLACAR AO VIVO (Espectador) === */
+[data-theme="light"] .pv-header { background: rgba(255,255,255,0.95) !important; border-bottom-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .pv-section { background: rgba(255,255,255,0.7); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .pv-score-box { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .pv-event-item { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .pv-hist-item { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.06); }
+
+/* === REGISTER === */
+[data-theme="light"] .register-box {
+    background: rgba(255,255,255,0.75);
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08);
+}
+[data-theme="light"] .register-box h2 { color: #1e293b; }
+
+/* === UI MODAL (FMModal) === */
+[data-theme="light"] .fm-modal-overlay { background: rgba(241,245,249,0.7) !important; }
+[data-theme="light"] .fm-modal-card {
+    background: rgba(255,255,255,0.98) !important;
+    border-color: rgba(0,0,0,0.1) !important;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.12) !important;
+}
+[data-theme="light"] .fm-modal-card h3 { color: #1e293b !important; }
+[data-theme="light"] .fm-modal-card p { color: #475569 !important; }
+[data-theme="light"] .fm-modal-btn-cancel {
+    background: rgba(0,0,0,0.04) !important;
+    border-color: rgba(0,0,0,0.1) !important;
+    color: #475569 !important;
+}

@@ -1,0 +1,3449 @@
+/* =================================================================== */
+/* ===== 1. ESTILOS GERAIS (Aplicados a todas as páginas) ===== */
+/* =================================================================== */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Componentes reutilizáveis */
+.card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #3c4043;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.btn {
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.85; }
+
+.btn-primary { background-color: #1a73e8; color: white; }
+.btn-danger { background-color: #d93025; color: white; }
+.btn-secondary { background-color: #f1f3f4; color: #3c4043; border: 1px solid #dadce0; }
+.btn-secondary:hover { background-color: #e8eaed; }
+.btn-confirm { background-color: #28a745; color: white; }
+.btn-cancel { background-color: #dc3545; color: white; }
+.btn-reschedule { background-color: #ffc107; color: #212529; }
+
+.back-button {
+    font-size: 1.2rem;
+    color: #3c4043;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- Cabeçalho e Rodapé Padrão --- */
+.main-header {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 10px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.header-logo {
+    height: 50px;
+    width: auto;
+    order: -1; /* Garante que a logo sempre fique no início (esquerda) */
+}
+
+.header-logo-large {
+    height: 60px;
+    width: auto;
+    margin-right: 20px;
+    order: -1; /* Garante que a logo sempre fique no início (esquerda) */
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    display: none; /* Oculto pois o logo é usado */
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #3c4043;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: #1a73e8;
+}
+
+.logout-button {
+    background-color: #d93025;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+    background-color: #b5281f;
+}
+
+.main-footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: 50px;
+    border-top: 4px solid #1a73e8;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-logo-player {
+    width: 80px;
+    margin-bottom: 15px;
+    filter: invert(1);
+}
+
+.main-footer p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+.main-footer p:first-of-type {
+    color: #ecf0f1;
+    font-weight: 600;
+}
+
+/* --- Componentes Modais e Notificações --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.modal-content h2 { margin-top: 0; color: #333; }
+.modal-content p { color: #5f6368; margin-bottom: 20px; }
+.modal-content textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #dadce0; font-family: inherit; font-size: 1rem; box-sizing: border-box; margin-bottom: 20px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 15px; }
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 3000;
+    transform: translateY(150%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.toast.show {
+    transform: translateY(0);
+}
+
+
+/* =================================================================== */
+/* ===== 2. ESTILOS PARA A PÁGINA DE LOGIN (index.html) ===== */
+/* =================================================================== */
+
+/* Garante que o container ocupe toda a tela e centralize seu conteúdo */
+.login-page-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;    /* Centraliza verticalmente */
+    min-height: 100vh;      /* Altura mínima de 100% da tela */
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/s2hMfGYH/Rosario-Central.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 20px;          /* Espaçamento interno para não colar nas bordas */
+    box-sizing: border-box; /* Garante que o padding não aumente o tamanho total */
+}
+
+body.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/s2hMfGYH/Rosario-Central.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 20px; 
+    box-sizing: border-box;
+}
+
+/* A caixa de login em si */
+.login-box {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 20px; /* Padding ajustado para telas menores */
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* O restante dos estilos da página de login permanece o mesmo... */
+.login-logo {
+    max-width: 380px; /* Logo um pouco menor para telas de celular */
+    margin-bottom: -60px;
+    filter: brightness(0) invert(1);
+    margin-top: -50px;
+}
+
+.login-box h2 {
+    margin-top: 0; 
+    margin-bottom: 25px;
+    color: #FFFFFF;
+    border: none;
+    font-size: 1.8rem; /* Título um pouco menor para celular */
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.subtitulo {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.input-group label {
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: 600;
+    color: #f0f2f5;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.input-group input {
+    width: 100%; 
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px; 
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+}
+
+.register-link {
+    margin-top: 20px; 
+    font-size: 0.9rem;
+    color: #f0f2f5;
+}
+
+.register-link a {
+    color: #87b7ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.error-message {
+    color: #d93025;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    display: none;
+}
+
+
+/* =================================================================== */
+/* ===== 3. ESTILOS PARA A PÁGINA DE BOAS-VINDAS (welcome.html) ===== */
+/* =================================================================== */
+.welcome-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.presentation-section { margin-bottom: 30px; }
+.presentation-section h2 { text-align: center; font-size: 1.8rem; margin-top: 0; }
+.presentation-section p { text-align: center; font-size: 1.1rem; color: #5f6368; line-height: 1.6; max-width: 600px; margin: 15px auto 30px; }
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.8s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    box-sizing: border-box;
+    aspect-ratio: 16 / 9;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.video-section h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-top: 0;
+}
+
+.video-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 */
+    border-radius: 10px;
+    background-color: #000;
+}
+
+.video-container iframe,
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.welcome-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+/* =================================================================== */
+/* ===== 4. ESTILOS PARA O DASHBOARD (dashboard.html) ===== */
+/* =================================================================== */
+.dashboard-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto; /* Ajuste para o header fixo */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.dashboard-container h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.match-list-container {
+    display: grid;
+    gap: 20px;
+}
+
+.match-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    border-left: 5px solid #ccc;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.match-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.match-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.match-date {
+    font-weight: 600;
+    color: #3c4043;
+}
+
+.match-status {
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+.status-confirmada { border-left-color: #28a745; }
+.status-confirmada .match-status { background-color: #28a745; }
+.status-confirmada .progress-bar { background-color: #28a745; }
+
+.status-agendada { border-left-color: #1a73e8; }
+.status-agendada .match-status { background-color: #1a73e8; }
+
+.status-encerrada { border-left-color: #6c757d; }
+.status-encerrada .match-status { background-color: #6c757d; }
+
+.status-cancelada { border-left-color: #d93025; }
+.status-cancelada .match-status { background-color: #d93025; }
+
+.match-location {
+    font-size: 1.1rem;
+    color: #5f6368;
+    margin: 0;
+}
+
+.match-card-footer {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.details-button {
+    background-color: #f1f3f4;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.details-button:hover {
+    background-color: #e8eaed;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.match-history-section h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* --- Painel do Admin (Dashboard) --- */
+#admin-activity-panel {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    margin-bottom: 20px;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activity-header h3 {
+    border-bottom: none;
+    margin-bottom: 0;
+    color: #664d03;
+}
+
+#activity-log-list {
+    margin-top: 15px;
+    border-top: 1px solid #ffeeba;
+    padding-top: 15px;
+}
+
+#activity-log-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+#activity-log-list li {
+    font-size: 0.9rem;
+    padding: 5px 0;
+    color: #5f6368;
+}
+
+.admin-actions {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* =================================================================== */
+/* ===== 5. ESTILOS PARA DETALHES DA PARTIDA (details.html) ===== */
+/* =================================================================== */
+.details-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: grid;
+    gap: 20px;
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#match-info p {
+    margin: 5px 0 15px;
+    font-size: 1.1rem;
+    color: #3c4043;
+}
+
+#match-info p strong {
+    color: #000;
+}
+
+.notes {
+    background-color: #f8f9fa;
+    border-left: 4px solid #1a73e8;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.notes p {
+    margin: 5px 0 0;
+}
+
+.player-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 5px;
+    border-bottom: 1px solid #f1f3f4;
+    font-size: 1.1rem;
+}
+
+.player-item:last-child {
+    border-bottom: none;
+}
+
+.player-item-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.status-icon {
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+}
+.status-icon.paid { background-color: #28a745; }
+.status-icon.unpaid { background-color: #d93025; }
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* --- Controles do Admin (Details) --- */
+#admin-controls h3 {
+    text-align: center;
+    color: #d93025;
+}
+
+.admin-buttons-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* --- Seção de Votação (Details) --- */
+#voting-section h2 {
+    text-align: center;
+    color: #1a73e8;
+}
+
+.voting-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+@media (min-width: 600px) { .voting-container { grid-template-columns: 1fr 1fr; } }
+
+.vote-category h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f1f3f4;
+    padding-bottom: 10px;
+}
+
+.vote-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vote-candidate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.vote-candidate .player-name { font-weight: 600; }
+.vote-candidate .vote-count { font-weight: bold; font-size: 1.2rem; margin-right: 15px; }
+
+.vote-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #dadce0;
+    transition: background-color 0.2s;
+}
+.vote-button:hover { background-color: #cdd1d4; }
+.vote-button.voted { background-color: #28a745; color: white; cursor: not-allowed; }
+
+.vote-message {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 600;
+    color: #5f6368;
+}
+
+/* --- Botão de Notificação (Sino) --- */
+.notify-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #5f6368;
+    transition: color 0.2s, transform 0.2s;
+    padding: 0 10px;
+}
+
+.notify-button:hover {
+    color: #1a73e8;
+    transform: scale(1.2);
+}
+
+
+/* =================================================================== */
+/* ===== 6. ESTILOS PARA AGENDAMENTO (schedule.html) ===== */
+/* =================================================================== */
+
+/* Container principal da página */
+.schedule-container {
+    width: 100%;
+    max-width: 600px; /* Um pouco mais estreito para formulários */
+    margin: 20px auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* Ajuste no cabeçalho para ter o botão voltar */
+.back-link-header {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Título centralizado no cabeçalho */
+.main-header h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #333;
+    display: block; /* Garante que o H1 seja visível nesta página */
+}
+
+/* Estilos para os campos do formulário de agendamento */
+.schedule-container .input-group label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000000; /* Cor escura para ser bem visível */
+    margin-bottom: 8px;
+}
+
+.schedule-container .input-group input,
+.schedule-container .input-group textarea {
+    background-color: #f8f9fa; /* Fundo cinza claro para diferenciar */
+    border: 1px solid #dee2e6;
+    padding: 15px; /* Mais espaçamento interno */
+    font-size: 1.1rem;
+}
+
+.schedule-container .input-group input::placeholder,
+.schedule-container .input-group textarea::placeholder {
+    color: #f8f9fa; /* Cor do texto de exemplo */
+}
+
+.schedule-container .btn {
+    width: 100%;
+    padding: 16px; /* Botão maior e mais fácil de clicar */
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+
+
+/* Estilo para o texto da data formatada na página de agendamento */
+
+.date-formatter-display {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a73e8; /* Cor azul primária para destaque */
+    background-color: #e8f0fe; /* Fundo azul bem claro */
+    padding: 8px;
+    border-radius: 6px;
+}
+
+
+
+/* =================================================================== */
+/* ===== 7. ESTILOS PARA PÁGINA FINANCEIRA (financials.html) ===== */
+/* =================================================================== */
+
+/* Container principal da página */
+.financials-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* Título principal da página no cabeçalho */
+.financials-container + footer {
+    margin-top: 20px; /* Ajusta o espaço antes do rodapé se houver */
+}
+
+/* Card de identificação da partida */
+#match-header-info {
+    background-color: #2c3e50; /* Fundo azul escuro */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+#match-header-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    border: none;
+    padding: 0;
+}
+
+/* Card de Balanço Final */
+.financial-balance-card h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #1a73e8;
+}
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    padding: 12px 5px;
+    border-bottom: 1px solid #f1f3f4;
+}
+.balance-item span:first-child {
+    color: #5f6368;
+}
+.balance-item strong {
+    font-weight: 700;
+}
+.balance-item.final-balance {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    padding-top: 15px;
+    margin-top: 10px;
+    border-top: 2px solid #eee;
+    border-bottom: none;
+}
+.revenue { color: #28a745; }
+.expenses { color: #d93025; }
+
+/* Lista de Despesas */
+#expenses-list p {
+    text-align: center;
+    color: #868e96;
+    font-style: italic;
+    padding: 10px 0;
+}
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 5px;
+    border-bottom: 1px solid #f1f3f4;
+}
+.expense-item:last-child { border-bottom: none; }
+.expense-item-right { display: flex; align-items: center; gap: 15px; }
+.delete-expense-btn {
+    background-color: #fce8e6;
+    color: #d93025;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    line-height: 30px; /* Centraliza o '✖' verticalmente */
+}
+.delete-expense-btn:hover { background-color: #f8d7da; }
+
+/* Formulário de Adicionar Despesa e Feedback */
+#add-expense-form .input-group input,
+#player-feedback-form .input-group textarea {
+    background-color: #FFFFFF;
+    border: 1px solid #BFBBBB;
+    color: #000000; /* Adicione esta linha para o texto digitado ficar branco */
+}
+
+/* Corrige a cor do placeholder para ser visível no fundo preto */
+#add-expense-form .input-group input::placeholder {
+    color: #BFBBBB; /* Branco semi-transparente */
+}
+/* Para compatibilidade com outros navegadores */
+#add-expense-form .input-group input::-webkit-input-placeholder {
+   color: #BFBBBB;
+}
+#add-expense-form .input-group input::-moz-placeholder {
+   color: #018749;
+   opacity: 1;
+}
+#add-expense-form .input-group input:-ms-input-placeholder {
+   color: #018749;
+}
+#add-expense-form .input-group input::-ms-input-placeholder {
+   color: #018749;
+}
+
+#add-expense-form .input-group label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3c4043; /* Cor escura para ser bem visível */
+    margin-bottom: 8px;
+}
+
+/* Melhora a aparência dos campos de input */
+#add-expense-form .input-group input {
+    background-color: #f8f9fa; /* Fundo cinza claro para diferenciar */
+    border: 1px solid #dee2e6;
+}
+
+#player-feedback-section p {
+    text-align: center;
+    color: #6B6A6A;
+    line-height: 1.6;
+}
+
+
+/* =================================================================== */
+/* ===== 8. ESTILOS PARA O PERFIL DO JOGADOR (profile.html) ===== */
+/* =================================================================== */
+#player-identification h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: #1a73e8;
+}
+
+#player-identification p {
+    margin: 5px 0 20px;
+    color: #5f6368;
+    font-style: italic;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.stat-card {
+    background-color: #f1f3f4;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-card h4 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: #3c4043;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5px;
+    border-bottom: 1px solid #f1f3f4;
+}
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-date {
+    font-weight: 600;
+}
+
+.history-location {
+    font-size: 0.9rem;
+    color: #5f6368;
+}
+
+.history-item-status {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =================================================================== */
+/* ===== 9. ESTILOS DIVERSOS E NÃO AGRUPADOS ===== */
+/* =================================================================== */
+/* Estes estilos parecem ser usados em múltiplos contextos ou */
+/* foram adicionados sem uma página específica em mente. */
+
+.delete-button {
+    background-color: #fce8e6;
+    color: #d93025;
+    border: 1px solid #f5c6cb;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    margin-right: 10px;
+}
+.delete-button:hover {
+    background-color: #f8d7da;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.payment-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.payment-control label {
+    font-size: 0.9rem;
+    color: #5f6368;
+}
+.payment-control input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.payment-control input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.player-name {
+    font-weight: 600;
+}
+.fee-status {
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 2px 6px;
+    display: inline-block;
+    width: fit-content;
+}
+.fee-status.discount {
+    color: #1e8e3e;
+    background-color: #e6f4ea;
+    border: 1px solid #a8d5b5;
+}
+.fee-status.penalty {
+    color: #a50e0e;
+    background-color: #fce8e6;
+    border: 1px solid #f5c6cb;
+}
+.final-fee {
+    font-weight: bold;
+    min-width: 75px;
+    text-align: right;
+    font-size: 1.1rem;
+}
+
+.countdown-container {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f1f3f4;
+}
+.countdown-text {
+    text-align: center;
+    font-weight: 600;
+    color: #5f6368;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+.progress-bar-container {
+    width: 100%;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #1a73e8;
+    border-radius: 20px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* ================================================== */
+/* ===== ESTILOS DO MODAL DE AVISO ===== */
+/* ================================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Fundo mais escuro para focar no modal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000; /* Garante que fique na frente de tudo */
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0; /* Começa invisível */
+    visibility: hidden; /* Começa inacessível */
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Classe para mostrar o modal */
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transform: scale(0.9); /* Efeito de zoom ao aparecer */
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-logo {
+    width: 70px;
+    margin-bottom: 15px;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    border: none;
+    text-shadow: none;
+}
+
+.modal-content p {
+    color: #5f6368;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.modal-highlight {
+    background-color: #e8f0fe; /* Fundo azul claro para destacar */
+    border-left: 4px solid var(--primary-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.modal-highlight strong {
+    color: #174ea6; /* Tom de azul mais escuro */
+}
+
+#close-modal-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+/* =================================================================== */
+/* ===== 10. [NOVO] ESTILOS PARA PÁGINAS COM FUNDO DE IMAGEM ===== */
+/* =================================================================== */
+/*
+  INSTRUÇÃO PARA USO:
+  Para aplicar este estilo visual a qualquer página, adicione a classe 
+  "page-with-background" na tag <body> do arquivo HTML.
+  
+  Exemplo: <body class="page-with-background">
+  
+  Este estilo criará:
+  - Fundo escuro com imagem de campo de futebol
+  - Cabeçalho transparente com textos brancos
+  - Campos de formulário translúcidos
+  - Rótulos (labels) brancos com sombra para legibilidade
+*/
+
+.page-with-background {
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center;     /* Centraliza o conteúdo verticalmente */
+    min-height: 100vh;       /* Altura mínima de 100% da tela */
+    width: 100%;
+    /* Aplica a imagem de fundo com uma camada escura por cima */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/s2hMfGYH/Rosario-Central.jpg');
+    background-size: cover;     /* Faz a imagem cobrir toda a área */
+    background-position: center;/* Centraliza a imagem */
+    padding: 20px;          /* Espaçamento para o conteúdo não colar nas bordas */
+    box-sizing: border-box;
+}
+
+/*
+  Quando uma página tem a classe .page-with-background, o cabeçalho
+  fica transparente para se integrar ao visual.
+*/
+.page-with-background .main-header {
+    background-color: transparent; /* Remove o fundo branco */
+    box-shadow: none;              /* Remove a sombra */
+}
+
+/*
+  O título e o botão "Voltar" no cabeçalho ficam brancos para 
+  contrastar com o fundo escuro.
+*/
+.page-with-background .main-header h1,
+.page-with-background .main-header .back-button {
+    color: #ffffff; /* Cor branca */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Sombra para melhorar a leitura */
+}
+
+/*
+  CORREÇÃO PRINCIPAL: Sobrescreve QUALQUER container que tenha fundo branco
+  nas páginas com a classe .page-with-background
+*/
+.page-with-background .card,
+.page-with-background .schedule-container,
+.page-with-background .form-container-on-background,
+.page-with-background main,
+.page-with-background .container {
+    background-color: transparent !important; /* Remove qualquer fundo branco */
+    box-shadow: none !important;              /* Remove qualquer sombra */
+    border: none !important;                  /* Remove qualquer borda */
+}
+
+/*
+  Container para o formulário nas páginas com imagem de fundo.
+  Use esta classe no <main> ou <div> principal do seu formulário.
+  
+  Exemplo: <main class="form-container-on-background">
+*/
+.form-container-on-background {
+    background-color: transparent; /* Sem cor de fundo */
+    box-shadow: none;              /* Sem sombra */
+    border: none;                  /* Sem borda */
+    padding: 0;                    /* Sem preenchimento extra */
+    width: 100%;
+    max-width: 500px;              /* Largura máxima do formulário */
+    text-align: center;
+}
+
+/*
+  Estilo específico para os rótulos (labels) nessas páginas.
+  Eles ficam brancos para contrastar com o fundo escuro.
+*/
+.page-with-background .input-group label {
+    color: #f0f2f5 !important; /* Cor branca/cinza claro */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombra para legibilidade */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+/*
+  Estilo específico para os campos de preenchimento (inputs e textareas).
+  Eles ficam com fundo translúcido e bordas claras.
+*/
+.page-with-background .input-group input,
+.page-with-background .input-group textarea {
+    background-color: rgba(255, 255, 255, 0.15) !important; /* Fundo branco com 15% de opacidade */
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;   /* Borda branca com 50% de opacidade */
+    color: #FFFFFF !important; /* Cor do texto digitado será branca */
+}
+
+/*
+  Cor do texto de exemplo (placeholder) dentro dos campos.
+  Fica branco e um pouco transparente.
+*/
+.page-with-background .input-group input::placeholder,
+.page-with-background .input-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important; /* Placeholder branco e um pouco transparente */
+}
+
+/*
+  Efeito de foco especial para os campos no fundo escuro.
+  Quando o usuário clica em um campo, a borda fica branca sólida.
+*/
+.page-with-background .input-group input:focus,
+.page-with-background .input-group textarea:focus {
+    border-color: #ffffff !important; /* Borda fica branca sólida ao clicar */
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3) !important; /* Sombra branca suave */
+}
+
+/*
+  Estilo para o botão principal (Salvar/Entrar) nessas páginas.
+  Você pode customizar a cor dele aqui se quiser que seja diferente do azul padrão.
+*/
+.page-with-background .btn-primary {
+    background-color: #007bff; /* Mantendo o azul, mas você pode mudar */
+    /* Exemplo para botão verde: background-color: #28a745; */
+}
+
+.page-with-background .btn-primary:hover {
+    opacity: 0.9;
+    /* Exemplo para hover verde: background-color: #218838; */
+}
+
+/*
+  COMO PERSONALIZAR AS CORES:
+  
+  1. Para mudar a imagem de fundo:
+     - Substitua a URL na propriedade background-image acima
+  
+  2. Para mudar a cor do botão principal:
+     - Altere o background-color em .page-with-background .btn-primary
+  
+  3. Para mudar a transparência dos campos:
+     - Altere o valor de opacidade em rgba(255, 255, 255, 0.15)
+     - Valores menores = mais transparente
+     - Valores maiores = menos transparente
+  
+  4. Para mudar a cor dos rótulos:
+     - Altere a propriedade color em .page-with-background .input-group label
+  
+  5. Para mudar a intensidade da camada escura sobre a imagem:
+     - Altere os valores em linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))
+     - 0.7 = 70% de escuridão. Use 0.5 para menos escuro ou 0.9 para mais escuro
+*/
+
+
+
+/* Estilo para o botão do grupo WhatsApp no cabeçalho */
+.whatsapp-group-button {
+    background-color: #25D366; /* Cor verde do WhatsApp */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.whatsapp-group-button:hover {
+    background-color: #1DA851; /* Tom mais escuro no hover */
+}
+
+
+
+
+/* ===== ESTILOS DA PÁGINA DE PAGAMENTO ===== */
+/* ============================================= */
+
+/* Container principal da página de pagamento */
+.payment-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Resumo da partida */
+.match-summary-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: 600;
+    color: #666;
+}
+
+.summary-value {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Seção de valor a pagar */
+.amount-display {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.currency {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.amount-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* Detalhamento do valor */
+.amount-breakdown {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.breakdown-item.discount {
+    color: #28a745;
+}
+
+.breakdown-item.penalty {
+    color: #dc3545;
+}
+
+.breakdown-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #dee2e6;
+    font-size: 1rem;
+}
+
+.no-adjustments {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Grid de métodos de pagamento */
+.payment-methods-grid {
+    display: grid;
+    gap: 15px;
+}
+
+/* Item de método de pagamento */
+.payment-method {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.payment-method:hover {
+    border-color: #1a73e8;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.1);
+}
+
+.payment-method.selected {
+    border-color: #1a73e8;
+    background-color: #f8f9ff;
+}
+
+.method-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+    width: 50px;
+    text-align: center;
+}
+
+.method-info {
+    flex: 1;
+}
+
+.method-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.method-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.method-selector {
+    position: relative;
+}
+
+.method-selector input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+.method-selector input[type="radio"]:checked {
+    border-color: #1a73e8;
+    background-color: #1a73e8;
+}
+
+.method-selector input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+/* Formulários de pagamento */
+.payment-form-card {
+    margin-top: 20px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Formulário PIX */
+.pix-content {
+    text-align: center;
+}
+
+.qr-code-container {
+    margin: 20px 0;
+}
+
+.qr-code-placeholder {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.qr-pattern {
+    width: 120px;
+    height: 120px;
+    background-image: 
+        linear-gradient(45deg, #333 25%, transparent 25%),
+        linear-gradient(-45deg, #333 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #333 75%),
+        linear-gradient(-45deg, transparent 75%, #333 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    margin-bottom: 10px;
+}
+
+.pix-key-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.pix-key-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.pix-key-display span {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Seção do link de pagamento PIX */
+.pix-payment-link-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #e8f5e8;
+    border-radius: 8px;
+    border: 2px solid #28a745;
+}
+
+.pix-link-display {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-pix-link {
+    display: inline-block;
+    background-color: #8a2be2;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(138, 43, 226, 0.3);
+}
+
+.btn-pix-link:hover {
+    background-color: #7b1fa2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(138, 43, 226, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-copy {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn-copy:hover {
+    background-color: #1557b0;
+}
+
+.pix-instructions {
+    text-align: left;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e7f3ff;
+    border-radius: 8px;
+    border-left: 4px solid #1a73e8;
+}
+
+.pix-instructions h4 {
+    margin: 0 0 10px 0;
+    color: #1a73e8;
+}
+
+.pix-instructions ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.pix-instructions li {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Formulários de cartão */
+.card-form {
+    display: grid;
+    gap: 15px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Botões de ação */
+.payment-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-large {
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.btn-large:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Modais */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal de processamento */
+.processing-modal {
+    max-width: 300px;
+}
+
+.processing-animation {
+    margin-bottom: 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1a73e8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modal de sucesso */
+.success-modal .success-icon {
+    font-size: 4rem;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+/* Modal de erro */
+.error-modal .error-icon {
+    font-size: 4rem;
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 15px;
+    }
+    
+    .amount-value {
+        font-size: 2rem;
+    }
+    
+    .input-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .qr-code-placeholder {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .qr-pattern {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+/* Estados de loading */
+.loading-spinner {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.loading-spinner::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1a73e8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Animações de entrada */
+.card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Melhorias de acessibilidade */
+.payment-method:focus-within {
+    outline: 2px solid #1a73e8;
+    outline-offset: 2px;
+}
+
+.btn:focus {
+    outline: 2px solid #1a73e8;
+    outline-offset: 2px;
+}
+
+/* Estados de hover para touch devices */
+@media (hover: hover) {
+    .payment-method:hover .method-icon {
+        transform: scale(1.1);
+        transition: transform 0.2s;
+    }
+}
+
+
+
+/* ===== ESTILOS PARA PÁGINA DE PAGAMENTO ATUALIZADA ===== */
+/* ========================================================= */
+
+/* Opções de pagamento */
+.payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.payment-option {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: #1a73e8;
+    background: #f0f7ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.15);
+}
+
+.option-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.option-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.option-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.option-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Seção PIX atualizada */
+.pix-content {
+    text-align: center;
+}
+
+.pix-key-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.pix-key-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #333;
+}
+
+.pix-key-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.pix-key-display span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a73e8;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+}
+
+.btn-copy {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-copy:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.pix-instructions {
+    margin-top: 25px;
+    text-align: left;
+    background: #fff3cd;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #ffc107;
+}
+
+.pix-instructions h4 {
+    margin-top: 0;
+    color: #856404;
+}
+
+.pix-instructions ol {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.pix-instructions li {
+    margin-bottom: 8px;
+    color: #856404;
+}
+
+/* Seção Mercado Pago */
+.mercadopago-content {
+    text-align: center;
+}
+
+.mercadopago-info {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.info-item.warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
+.info-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.info-text strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.info-text p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.mercadopago-button-section {
+    margin: 25px 0;
+}
+
+.btn-mercadopago {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #009ee3;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 158, 227, 0.3);
+}
+
+.btn-mercadopago:hover {
+    background: #0088cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 158, 227, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.mp-icon {
+    font-size: 1.2rem;
+}
+
+.mercadopago-note {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Botões de ação atualizados */
+.payment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-large {
+    padding: 18px 25px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Breakdown de valores atualizado */
+.breakdown-total.mercadopago {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    margin-top: 10px;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .payment-options {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .pix-key-display {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .pix-key-display span {
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .btn-mercadopago {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    .payment-actions {
+        gap: 12px;
+    }
+    
+    .btn-large {
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-option {
+        padding: 15px;
+    }
+    
+    .option-icon {
+        font-size: 2rem;
+    }
+    
+    .pix-key-section,
+    .mercadopago-info {
+        padding: 15px;
+    }
+    
+    .btn-mercadopago {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ===== MELHORIAS ADICIONAIS PARA BOTÕES DE CONFIRMAÇÃO ===== */
+/* ============================================================ */
+
+/* Efeitos visuais para os botões de confirmação */
+.btn-large {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-large::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-large:hover::before {
+    left: 100%;
+}
+
+/* Estilo específico para botão PIX */
+.btn-primary {
+    background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+    box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1557b0 0%, #3367d6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.4);
+}
+
+/* Estilo específico para botão Mercado Pago */
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* Animação de pulso para chamar atenção */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(26, 115, 232, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(26, 115, 232, 0);
+    }
+}
+
+.btn-primary:focus {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+.btn-success:focus {
+    animation: pulse-green 2s infinite;
+}
+
+/* Melhorias para dispositivos móveis */
+@media (max-width: 768px) {
+    .btn-large {
+        padding: 16px 20px;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .payment-actions {
+        padding: 0 10px;
+    }
+}
+
+/* Indicador visual de WhatsApp */
+.btn-large::after {
+    content: '📱';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    font-size: 1.2rem;
+}
+
+.btn-secondary::after {
+    content: '';
+}
+
+/* Tooltip para explicar a funcionalidade */
+.btn-large[title] {
+    position: relative;
+}
+
+.btn-large[title]:hover::before {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+
+
+/* ===== ESTILOS PARA NOVA INTERFACE DE PAGAMENTO ===== */
+/* ===================================================== */
+
+/* Cabeçalho das opções de pagamento com clique */
+.payment-option .option-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.payment-option .option-header:hover {
+    background-color: #f8f9fa;
+}
+
+.payment-option .option-header .option-arrow {
+    font-size: 1.2rem;
+    color: #666;
+    transition: transform 0.2s ease;
+}
+
+/* Detalhes dos métodos de pagamento */
+.payment-details {
+    margin-top: 15px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Seção do link do Nubank */
+.nubank-link-section {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #8a05be;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.nubank-link-section label {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.btn-nubank {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #8a05be;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    border: 2px solid #ffffff;
+}
+
+.btn-nubank:hover {
+    background-color: #8a05be;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(138, 5, 190, 0.3);
+}
+
+/* Botões de ação dentro dos métodos de pagamento */
+.payment-method-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.payment-method-actions .btn {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Seção de ações gerais */
+.general-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.general-actions .btn {
+    min-width: 200px;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .payment-method-actions {
+        flex-direction: column;
+    }
+    
+    .payment-method-actions .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .nubank-link-section {
+        margin: 10px 0;
+        padding: 12px;
+    }
+    
+    .btn-nubank {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Melhorias visuais para as opções de pagamento */
+.payment-option {
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.payment-option:hover {
+    border-color: #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-option.active {
+    border-color: #1a73e8;
+    box-shadow: 0 2px 12px rgba(26, 115, 232, 0.2);
+}
+
+/* Estilo para quando um método está expandido */
+.payment-option .option-header.expanded {
+    background-color: #f0f7ff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+
+/* ===== ESTILOS PARA CONTROLES ADMINISTRATIVOS ===== */
+/* ================================================== */
+
+/* Seção de gerenciamento de jogadores */
+.admin-player-management {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.admin-player-management h4 {
+    margin: 0 0 15px 0;
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+.add-player-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.admin-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+/* Controles administrativos na lista de jogadores */
+.admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.admin-controls label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.admin-controls label:hover {
+    background-color: #f8f9fa;
+}
+
+.admin-controls input[type="checkbox"] {
+    display: none;
+}
+
+.admin-controls input[type="checkbox"]:checked + span,
+.admin-controls label:has(input[type="checkbox"]:checked) {
+    background-color: #d4edda;
+    border-radius: 4px;
+}
+
+.btn-remove-player {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-remove-player:hover {
+    background-color: #f8d7da;
+}
+
+/* Status de comprovante */
+.receipt-status {
+    margin-left: 8px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Melhorias na lista de jogadores */
+.player-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.player-item-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-name {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Responsividade para controles administrativos */
+@media (max-width: 768px) {
+    .add-player-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .admin-controls {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    .admin-controls label {
+        font-size: 1rem;
+        padding: 2px;
+    }
+    
+    .player-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .player-item-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+
+
+/* ===== ESTILOS PARA DETALHES DOS JOGADORES ===== */
+.btn-details {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.btn-details:hover {
+    background-color: #f1f3f4;
+}
+
+.player-details {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #1a73e8;
+}
+
+.details-content h4 {
+    margin: 0 0 15px 0;
+    color: #1a73e8;
+    font-size: 1.1rem;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+}
+
+.info-label {
+    font-weight: 600;
+    min-width: 140px;
+    color: #3c4043;
+}
+
+.info-value {
+    font-weight: 500;
+    flex: 1;
+}
+
+.info-value.paid,
+.info-value.sent {
+    color: #28a745;
+}
+
+.info-value.unpaid,
+.info-value.not-sent {
+    color: #dc3545;
+}
+
+.admin-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    margin-left: 10px;
+}
+
+.admin-icon:hover {
+    background-color: #e8eaed;
+}
+
+.payment-icon {
+    color: #ffc107;
+}
+
+.receipt-icon {
+    color: #17a2b8;
+}
+
+.btn-remove-player {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn-remove-player:hover {
+    background-color: #c82333;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .info-label {
+        min-width: auto;
+    }
+    
+    .admin-icon {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}
+
+
+
+/* =================================================================== */
+/* ===== ESTILOS MELHORADOS PARA A PÁGINA FINANCEIRA ===== */
+/* =================================================================== */
+
+/* Cartão de informações da partida */
+.match-info-card {
+    border-left: 4px solid #1a73e8;
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+.match-info-header h2 {
+    color: #1a73e8;
+    margin: 0 0 15px 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.match-details-content {
+    background-color: #f8f9ff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e3e8ff;
+}
+
+.match-details-content h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Cartão de balanço financeiro */
+.financial-balance-card {
+    border-left: 4px solid #28a745;
+    background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+}
+
+.balance-header h2 {
+    color: #28a745;
+    margin: 0 0 20px 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.balance-content {
+    background-color: #f8fff9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #d4edda;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.balance-item:last-child {
+    border-bottom: none;
+}
+
+.balance-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.balance-icon {
+    font-size: 1.1rem;
+}
+
+.revenue-item .balance-label {
+    color: #28a745;
+}
+
+.expense-item .balance-label {
+    color: #dc3545;
+}
+
+.final-balance-item {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #28a745;
+    margin-top: 10px;
+}
+
+.final-balance-item .balance-label {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.final-balance-value {
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+}
+
+.balance-divider {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, #28a745, #20c997);
+    margin: 15px 0;
+    border-radius: 1px;
+}
+
+/* Seção de despesas */
+.expenses-section {
+    border-left: 4px solid #ffc107;
+    background: linear-gradient(135deg, #fffdf5 0%, #ffffff 100%);
+}
+
+.expenses-header h3 {
+    color: #856404;
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.expenses-list-content {
+    background-color: #fffdf5;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ffeaa7;
+    min-height: 60px;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.2s;
+}
+
+.expense-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expense-item:last-child {
+    margin-bottom: 0;
+}
+
+.expense-item-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-expense-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-expense-btn:hover {
+    background-color: #c82333;
+}
+
+/* Seção de adicionar despesa */
+.add-expense-section {
+    border-left: 4px solid #17a2b8;
+    background: linear-gradient(135deg, #f0fdff 0%, #ffffff 100%);
+}
+
+.add-expense-header h3 {
+    color: #0c5460;
+    margin: 0 0 20px 0;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-expense-form {
+    background-color: #f0fdff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #bee5eb;
+}
+
+.add-expense-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add-expense-btn:hover {
+    background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .balance-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .balance-label {
+        width: 100%;
+    }
+    
+    .expense-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .expense-item-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .match-details-content h3 {
+        font-size: 1.1rem;
+    }
+}
+
+
+/* =================================================================== */
+/* ===== ESTILOS PARA O MENU DE NAVEGAÇÃO REORGANIZADO ===== */
+/* =================================================================== */
+
+/* Navegação específica para o dashboard */
+.dashboard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.nav-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 70px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #495057;
+    font-weight: 500;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+.nav-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Cores específicas para cada botão */
+.nav-home {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-color: #2196f3;
+    color: #1565c0;
+}
+
+.nav-home:hover {
+    background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%);
+    color: #0d47a1;
+}
+
+.nav-profile {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    border-color: #9c27b0;
+    color: #6a1b9a;
+}
+
+.nav-profile:hover {
+    background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+    color: #4a148c;
+}
+
+.nav-whatsapp {
+    background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+.nav-whatsapp:hover {
+    background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+    color: #1b5e20;
+}
+
+.nav-logout {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    border-color: #f44336;
+    color: #c62828;
+}
+
+.nav-logout:hover {
+    background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+    color: #b71c1c;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 8px 15px;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        top: auto;
+    }
+    
+    .header-logo {
+        height: 40px;
+    }
+    
+    .nav-buttons-container {
+        justify-content: center;
+        gap: 6px;
+    }
+    
+    .nav-button {
+        min-width: 60px;
+        padding: 6px 8px;
+    }
+    
+    .nav-icon {
+        font-size: 1rem;
+    }
+    
+    .nav-text {
+        font-size: 0.7rem;
+    }
+    
+    .dashboard-container {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-buttons-container {
+        gap: 4px;
+    }
+    
+    .nav-button {
+        min-width: 50px;
+        padding: 5px 6px;
+    }
+    
+    .nav-text {
+        font-size: 0.65rem;
+    }
+}
+
+/* Ajustes para manter compatibilidade com outras páginas */
+.main-nav:not(.dashboard-nav) {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-nav:not(.dashboard-nav) .nav-link {
+    text-decoration: none;
+    color: #3c4043;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.main-nav:not(.dashboard-nav) .nav-link:hover {
+    color: #1a73e8;
+}
+
+.main-nav:not(.dashboard-nav) .logout-button {
+    background-color: #d93025;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.main-nav:not(.dashboard-nav) .logout-button:hover {
+    background-color: #b5281f;
+}
+
+
+/* =================================================================== */
+/* ===== ESTILOS PARA LOGO MAIOR E BOTÕES ADICIONAIS ===== */
+/* =================================================================== */
+
+/* Ajustes para o cabeçalho com logo maior */
+.main-header {
+    padding: 12px 30px;
+    min-height: 70px;
+}
+
+/* Responsividade para logo maior */
+@media (max-width: 768px) {
+    .header-logo-large {
+        height: 45px;
+        margin-right: 15px;
+    }
+    
+    .main-header {
+        padding: 10px 15px;
+        min-height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-logo-large {
+        height: 40px;
+        margin-right: 10px;
+    }
+    
+    .main-header {
+        padding: 8px 10px;
+        min-height: 55px;
+    }
+}
+
+
+/* =================================================================== */
+/* ===== ESTILOS PARA DETALHES MELHORADOS DA PARTIDA ===== */
+/* =================================================================== */
+
+/* Itens de detalhes da partida */
+.match-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.match-detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-value {
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: right;
+}
+
+/* Responsividade para detalhes da partida */
+@media (max-width: 768px) {
+    .match-detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        padding: 10px 0;
+    }
+    
+    .detail-value {
+        text-align: left;
+        font-size: 1.1rem;
+    }
+}
+
+
+/* =================================================================== */
+/* ===== ESTILOS PARA PÁGINA DE AGENDAMENTO REORGANIZADA ===== */
+/* =================================================================== */
+
+/* Container principal da página de agendamento */
+.schedule-main-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: calc(100vh - 80px);
+}
+
+/* Cabeçalho da página de agendamento */
+.schedule-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a73e8, #4285f4);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+.schedule-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.schedule-header p {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Card do formulário */
+.schedule-form-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e8eaed;
+}
+
+/* Formulário de agendamento */
+.schedule-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Linha do formulário (para campos lado a lado) */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Grupos de input melhorados */
+.schedule-form .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.schedule-form .input-group label {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.schedule-form .input-group input,
+.schedule-form .input-group select,
+.schedule-form .input-group textarea {
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.schedule-form .input-group input:focus,
+.schedule-form .input-group select:focus,
+.schedule-form .input-group textarea:focus {
+    outline: none;
+    border-color: #1a73e8;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.schedule-form .input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+/* Ações do formulário */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.form-actions .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-actions .btn-secondary {
+    background-color: #6b7280;
+    color: white;
+}
+
+.form-actions .btn-secondary:hover {
+    background-color: #4b5563;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+.form-actions .btn-primary {
+    background: linear-gradient(135deg, #1a73e8, #4285f4);
+    color: white;
+}
+
+.form-actions .btn-primary:hover {
+    background: linear-gradient(135deg, #1557b0, #3367d6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .schedule-main-container {
+        padding: 15px;
+    }
+    
+    .schedule-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .schedule-form-card {
+        padding: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* Botão específico para partidas */
+.nav-matches {
+    background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+.nav-matches:hover {
+    background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+    color: #1b5e20;
+}
+

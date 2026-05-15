@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Perfil - Futebol Milhão</title>
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/theme-light-overrides.css" />
+    <link rel="stylesheet" href="../css/pages/profile.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+  </head>
+  <body>
+    <header
+      class="main-header"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 15px">
+        <a
+          href="welcome.html"
+          title="Voltar"
+          style="
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+          "
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <h1 style="font-size: 1.2rem; margin: 0; color: var(--text-main)">
+          Meu Perfil
+        </h1>
+      </div>
+      <nav class="main-nav" aria-label="Menu principal">
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-buttons-container">
+          <a href="welcome.html" class="nav-button nav-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Início</span>
+          </a>
+          <a href="dashboard.html" class="nav-button nav-dashboard">
+            <span class="nav-icon">⚽</span>
+            <span class="nav-text">Partidas</span>
+          </a>
+          <a
+            href="schedule.html"
+            class="nav-button nav-schedule"
+            data-admin-only
+          >
+            <span class="nav-icon">📅</span>
+            <span class="nav-text">Agendar</span>
+          </a>
+          <a href="#" target="_blank" class="nav-button nav-whatsapp">
+            <span class="nav-icon">💬</span>
+            <span class="nav-text">WhatsApp Admin</span>
+          </a>
+          <a href="../index.html" class="nav-button nav-logout">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Sair</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="profile-container">
+      <!-- Hero Card - Avatar e Info Principal -->
+      <section class="profile-hero-card">
+        <div class="profile-avatar-area">
+          <div class="avatar-circle" id="avatar-initials">?</div>
+          <div class="avatar-glow"></div>
+        </div>
+        <h1 id="profile-name" class="profile-display-name">Carregando...</h1>
+        <span id="profile-role-badge" class="profile-role-badge">jogador</span>
+        <p id="profile-member-since" class="profile-member-since">
+          Membro desde...
+        </p>
+      </section>
+
+      <!-- Info Pessoal -->
+      <section class="card profile-info-card">
+        <h3>👤 Informações Pessoais</h3>
+        <div class="profile-info-grid" id="profile-info-grid">
+          <!-- Renderizado pelo JS -->
+        </div>
+      </section>
+
+      <!-- Estatísticas -->
+      <section class="card profile-stats-card">
+        <h3>📊 Minhas Estatísticas</h3>
+        <div class="stats-grid" id="player-stats-container">
+          <!-- Renderizado pelo JS -->
+        </div>
+      </section>
+
+      <!-- Histórico -->
+      <section class="card profile-history-card">
+        <h3>📜 Meu Histórico Recente</h3>
+        <div id="match-history-list" class="history-list">
+          <!-- Renderizado pelo JS -->
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/ui-modal.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/profile.js"></script>
+  </body>
+</html>
