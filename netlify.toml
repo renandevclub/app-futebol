@@ -1,41 +1,76 @@
+# ============================================================
+# NETLIFY.TOML — Futebol Milhão
+# Última atualização: 15/05/2026
+# Propósito: Garantir atualização imediata de CSS/JS para
+#            todos os dispositivos, incluindo Chrome Mobile.
+# ============================================================
+
 [build]
   # Projeto estático puro - sem build step
   publish = "."
 
-# ===== HEADERS DE SEGURANÇA =====
+# ============================================================
+# HEADERS GLOBAIS — Segurança + Cache padrão para HTML
+# ============================================================
+# A regra "/*" se aplica a TODAS as requisições, incluindo
+# as clean URLs (/inicio, /dashboard, etc.) que fazem rewrite.
+# Isso garante que o HTML sempre revalide com o servidor.
 [[headers]]
   for = "/*"
   [headers.values]
+    # ── Segurança ──
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-XSS-Protection = "1; mode=block"
+    # ── Cache padrão: sempre revalidar ──
+    # "no-cache" permite armazenar mas OBRIGA o navegador a verificar
+    # com o servidor antes de usar. Se não mudou → 304 (rápido).
+    # Se mudou → entrega a versão nova imediatamente.
+    Cache-Control = "public, no-cache, must-revalidate"
 
-# Cache agressivo para assets estáticos (imagens, fontes)
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Cache para CSS e JS (com hash busting via query string)
+# ============================================================
+# CSS — Sem cache agressivo (sem hash nos arquivos)
+# ============================================================
+# Como o projeto não usa build tool (Vite, Webpack), os nomes
+# dos arquivos CSS NUNCA mudam. O navegador PRECISA verificar
+# com o servidor a cada acesso para pegar a versão mais recente.
 [[headers]]
   for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, no-cache, must-revalidate"
 
+# ============================================================
+# JS — Sem cache agressivo (sem hash nos arquivos)
+# ============================================================
+# Mesmo raciocínio do CSS. Sem hash = sem garantia de que o
+# nome do arquivo mudou. Obrigar revalidação é a única saída
+# segura para garantir atualização em Chrome Mobile.
 [[headers]]
   for = "/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, no-cache, must-revalidate"
 
-# HTML - sem cache forte para permitir atualizações
+# ============================================================
+# IMAGENS E MÍDIAS — Cache moderado (24 horas)
+# ============================================================
+# Imagens mudam raramente (fotos, logos), mas PODEM mudar.
+# 24h é um equilíbrio: evita downloads desnecessários sem
+# prender versões antigas por meses.
+# Se futuramente usar hashes nos nomes, pode aumentar para 1 ano.
 [[headers]]
-  for = "/*.html"
+  for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=86400, must-revalidate"
 
-# ===== REDIRECIONAMENTOS =====
-# Redireciona rotas sem .html para os arquivos correspondentes (clean URLs)
+# ============================================================
+# REDIRECIONAMENTOS (Clean URLs)
+# ============================================================
+# Todos os redirects existentes preservados integralmente.
+# status = 200 = rewrite (a URL do navegador NÃO muda).
+
 [[redirects]]
   from = "/admin-placar"
   to = "/pages/admin-placar.html"
