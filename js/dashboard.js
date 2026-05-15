@@ -2,6 +2,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   await initDB();
 
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+  const currentUserPaymentStatus = currentUser
+    ? await getPlayerPaymentStatus(currentUser.id).catch((error) => {
+        console.warn('Não foi possível obter status de pagamento do jogador:', error);
+        return null;
+      })
+    : null;
   const adminActionsDiv = document.getElementById("admin-actions");
   const adminActivityPanel = document.getElementById("admin-activity-panel");
   let lastLogTimestamp = null;
@@ -94,6 +100,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             ? `<button class="btn btn-secondary edit-button" data-match-id="${match.id}">Editar</button>`
             : "";
         const whatsappButtonHTML = `<button class="btn btn-confirm whatsapp-button" data-match-id="${match.id}">📱 WhatsApp do Admin</button>`;
+        const paymentButtonHTML = currentUserPaymentStatus?.confirmed
+          ? `<button class="btn btn-primary payment-button" data-payment-button>Ir para pagamento</button>`
+          : "";
 
         // Função para obter o link do Google Maps baseado no local
         function getLocationLink(location) {
@@ -155,6 +164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             ${deleteButtonHTML}
                         </div>
                         <button class="btn btn-primary details-button" data-match-id="${match.id}">Ver Detalhes</button>
+                        ${paymentButtonHTML}
                     </div>`;
 
         matchListDiv.appendChild(card);
@@ -210,6 +220,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Numero do administrador nao configurado. Por favor, configure nas opcoes.",
               );
             }
+          });
+        }
+
+        const paymentButton = card.querySelector('.payment-button');
+        if (paymentButton) {
+          paymentButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            window.location.href = 'payment.html';
           });
         }
 

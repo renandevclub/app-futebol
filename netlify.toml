@@ -57,6 +57,11 @@
   status = 200
 
 [[redirects]]
+  from = "/pagamento"
+  to = "/pages/payment.html"
+  status = 200
+
+[[redirects]]
   from = "/perfil"
   to = "/pages/profile.html"
   status = 200

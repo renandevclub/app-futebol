@@ -388,9 +388,66 @@ document.addEventListener('DOMContentLoaded', async () => {
         const confirmedPlayers = currentMatch.players.filter(p => p.status !== 'withdrew' && p.status !== 'removed');
         const withdrawnPlayers = currentMatch.players.filter(p => p.status === 'withdrew');
 
-        // Renderizar jogadores confirmados
+        // Renderizar jogadores confirmados (Agrupados por time)
+        const playersByTeam = {};
         for (const player of confirmedPlayers) {
-            container.appendChild(await buildPlayerElement(player, isAdmin, client));
+            const teamLabel = getPlayerTeamLabel(player) || 'Sem Time';
+            if (!playersByTeam[teamLabel]) {
+                playersByTeam[teamLabel] = [];
+            }
+            playersByTeam[teamLabel].push(player);
+        }
+
+        // Ordenar os times: alfabeticamente, garantindo que 'Sem Time' fique no final
+        const sortedTeams = Object.keys(playersByTeam).sort((a, b) => {
+            if (a === 'Sem Time') return 1;
+            if (b === 'Sem Time') return -1;
+            return a.localeCompare(b);
+        });
+
+        for (const teamLabel of sortedTeams) {
+            const teamGroup = document.createElement('div');
+            teamGroup.className = 'team-group-section';
+            teamGroup.style.cssText = 'margin-bottom: 24px; animation: fadeIn 0.4s ease-out;';
+            
+            // Header do time
+            const teamHeader = document.createElement('div');
+            teamHeader.style.cssText = 'display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 0 4px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;';
+            
+            let teamColor = '#94a3b8'; // Default para sem time
+            let teamIcon = '⏳';
+            if (teamLabel !== 'Sem Time') {
+                teamIcon = '🛡️';
+                // Tenta achar a cor baseado no primeiro jogador desse grupo que tem ID
+                const samplePlayer = playersByTeam[teamLabel].find(p => p.teamId);
+                if (samplePlayer && samplePlayer.teamId) {
+                    const teamData = getTeamById(samplePlayer.teamId);
+                    if (teamData && teamData.color) {
+                        teamColor = teamData.color;
+                    }
+                } else {
+                    teamColor = '#3b82f6'; // Fallback
+                }
+            }
+
+            teamHeader.innerHTML = `
+                <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: ${teamColor}22; color: ${teamColor}; font-weight: 900; font-size: 1rem; box-shadow: 0 2px 8px ${teamColor}33;">${teamIcon}</span>
+                <h4 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #f8fafc; letter-spacing: -0.02em;">${teamLabel} <span style="font-size: 0.85rem; color: #64748b; font-weight: 500; margin-left: 6px;">(${playersByTeam[teamLabel].length})</span></h4>
+            `;
+            teamGroup.appendChild(teamHeader);
+
+            // Container para as rows de jogadores
+            const playersListContainer = document.createElement('div');
+            playersListContainer.style.cssText = 'display: flex; flex-direction: column; gap: 8px;';
+
+            for (const player of playersByTeam[teamLabel]) {
+                const playerEl = await buildPlayerElement(player, isAdmin, client);
+                playerEl.style.marginBottom = '0';
+                playersListContainer.appendChild(playerEl);
+            }
+            
+            teamGroup.appendChild(playersListContainer);
+            container.appendChild(teamGroup);
         }
 
         // Renderizar seção de desistentes (se houver)
@@ -645,7 +702,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <p class="scratch-auto-confirm">Você já está vinculado a este time.</p>
             `;
-            return container;
+        // Adiciona botão "Ir para pagamento" para jogadores confirmados não pagos
+        if (typeof getPlayerPaymentStatus === 'function') {
+            getPlayerPaymentStatus(currentUser.auth_id || currentUser.id).then(status => {
+                if (status && status.confirmed === true && status.payment_status !== "paid") {
+                    const payBtn = document.createElement('button');
+                    payBtn.className = 'btn btn-primary';
+                    payBtn.innerHTML = '💳 Ir para pagamento';
+                    payBtn.style.cssText = 'margin-top: 12px; width: 100%; padding: 14px 20px; font-weight: 700; font-size: 0.95rem; border-radius: 12px; cursor: pointer; display: block; box-sizing: border-box; text-align: center;';
+                    payBtn.addEventListener('click', () => window.location.href = 'payment.html');
+                    container.appendChild(payBtn);
+                }
+            }).catch(console.warn);
+        }
+
+        return container;
         }
 
         // Se o sorteio estiver cheio e houver o 4º time, permite entrada direta
@@ -859,6 +930,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 assignedTeamName = result.assignment.teamName || assignedTeamName;
                 drawSuccess = true;
                 console.log('✅ Sorteio confirmado no servidor:', assignedTeamName);
+                if (typeof updatePlayerPaymentStatus === 'function') {
+                    updatePlayerPaymentStatus(currentUser.auth_id || currentUser.id, { confirmed: true }).catch(console.warn);
+                }
             }
         } catch (error) {
             console.error('❌ Erro no sorteio:', error);
@@ -876,6 +950,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         assignedTeamName = status.team_name;
                         drawSuccess = true;
                         console.log('✅ Time recuperado do servidor:', assignedTeamName);
+                        if (typeof updatePlayerPaymentStatus === 'function') {
+                            updatePlayerPaymentStatus(currentUser.auth_id || currentUser.id, { confirmed: true }).catch(console.warn);
+                        }
                     }
                 } catch (statusError) {
                     console.warn('Não foi possível recuperar status:', statusError);
@@ -989,6 +1066,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         shareBtn.addEventListener('click', () => handleShareTeamList());
         container.appendChild(shareBtn);
 
+        // Adiciona botão "Ir para pagamento" para jogadores confirmados não pagos
+        if (typeof getPlayerPaymentStatus === 'function') {
+            getPlayerPaymentStatus(currentUser.auth_id || currentUser.id).then(status => {
+                if (status && status.confirmed === true && status.payment_status !== "paid") {
+                    const payBtn = document.createElement('button');
+                    payBtn.className = 'btn btn-primary';
+                    payBtn.innerHTML = '💳 Ir para pagamento';
+                    payBtn.style.cssText = 'margin-top: 12px; width: 100%; padding: 14px 20px; font-weight: 700; font-size: 0.95rem; border-radius: 12px; cursor: pointer;';
+                    payBtn.addEventListener('click', () => window.location.href = 'payment.html');
+                    container.appendChild(payBtn);
+                }
+            }).catch(console.warn);
+        }
+
         // Recarrega a página para sincronizar com o servidor
         setTimeout(() => loadAndRenderPage(), 2500);
     }
@@ -1060,6 +1151,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 shareButton.addEventListener('mouseleave', () => { shareButton.style.transform = 'none'; shareButton.style.filter = 'none'; });
                 shareButton.addEventListener('click', handleShareTeamList);
             }
+
+            // EXIBIR BOTÃO DE PAGAMENTO para quem tem time (está no sorteio) e não pagou
+            if (playerHasTeam && !currentPlayer.paid) {
+                const payBtn = document.createElement('button');
+                payBtn.className = 'btn btn-primary btn-pay-now';
+                payBtn.innerHTML = '💳 Ir para pagamento';
+                payBtn.style.cssText = 'margin-bottom: 12px; width: 100%; padding: 14px 20px; font-weight: 700; font-size: 0.95rem; border-radius: 12px; cursor: pointer; display: block; text-align: center;';
+                payBtn.addEventListener('click', () => window.location.href = 'payment.html');
+                actionButtonsContainer.appendChild(payBtn);
+            }
+
             actionButtonsContainer.appendChild(createActionButton('Não Poderei Comparecer', 'btn-danger', handleLeaveMatch));
         } else if (isScratchCardEnabled()) {
             actionButtonsContainer.appendChild(createScratchCard());
@@ -1361,6 +1463,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (player.paid) {
                 await clearPlayerStats(player.username);
             }
+            
+            // Sincroniza status global no Supabase
+            if (typeof updatePlayerPaymentStatus === 'function') {
+                const userObj = await getUser(player.username);
+                if (userObj && userObj.auth_id) {
+                    await updatePlayerPaymentStatus(userObj.auth_id, {
+                        payment_status: player.paid ? 'paid' : 'pending'
+                    });
+                }
+            }
+            
             loadAndRenderPage();
         } catch (error) {
             console.error('Erro ao atualizar pagamento:', error);

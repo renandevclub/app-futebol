@@ -1015,6 +1015,51 @@
     return null;
   };
 
+  api.checkPaymentStatus = async function() {
+    if (typeof getCurrentStoredUser !== 'function' || typeof getPlayerPaymentStatus !== 'function') return;
+    
+    // Mostra apenas uma vez por sessão/login
+    if (sessionStorage.getItem('paymentModalShown') === 'true') return;
+    
+    const currentUser = getCurrentStoredUser();
+    if (!currentUser) return;
+    
+    try {
+      const status = await getPlayerPaymentStatus(currentUser.auth_id || currentUser.id);
+      if (status && status.confirmed === true && status.payment_status !== "paid") {
+        
+        sessionStorage.setItem('paymentModalShown', 'true');
+        
+        api.show({
+          type: "warning",
+          title: "Pagamento Pendente",
+          message: "Você está confirmado para o jogo, mas ainda não realizou o pagamento da coleta.",
+          closeOnEsc: true,
+          closeOnBackdrop: true,
+          closeButton: true,
+          actions: [
+            { id: "close", label: "Lembrar depois", variant: "secondary", closes: true },
+            { id: "pay", label: "Ir para pagamento", variant: "primary", closes: false }
+          ]
+        }).then((result) => {
+          if (result && result.action === "pay") {
+            window.location.href = "payment.html";
+          }
+        });
+      }
+    } catch (e) {
+      console.warn("Erro ao checar status de pagamento:", e);
+    }
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (window.FMModal && typeof window.FMModal.checkPaymentStatus === 'function') {
+        window.FMModal.checkPaymentStatus();
+      }
+    }, 1500);
+  });
+
   window.addEventListener("fm:realtime-modal", (event) => {
     api.fromRealtime(event.detail || {});
   });

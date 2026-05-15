@@ -292,6 +292,42 @@ async function getProfileByAuthId(authId) {
     return users.find(user => user.id === authId || user.auth_id === authId) || null;
 }
 
+async function getPlayerPaymentStatus(authUserId) {
+    await initDB();
+
+    const remotePlayer = await runSupabaseQuery(async (client) => {
+        const { data, error } = await client
+            .from('fm_profiles')
+            .select('confirmed, payment_status')
+            .eq('auth_id', authUserId)
+            .maybeSingle();
+
+        if (error) throw error;
+        return data || null;
+    }, undefined);
+
+    if (remotePlayer !== undefined) return remotePlayer;
+    return null;
+}
+
+async function getPaymentLink() {
+    await initDB();
+
+    const remoteSetting = await runSupabaseQuery(async (client) => {
+        const { data, error } = await client
+            .from('settings')
+            .select('value')
+            .eq('key', 'payment_link')
+            .maybeSingle();
+
+        if (error) throw error;
+        return data || null;
+    }, undefined);
+
+    if (remoteSetting !== undefined) return remoteSetting?.value || null;
+    return null;
+}
+
 async function addUser(user) {
     await initDB();
     assertAdminWrite('adicionar usuarios');

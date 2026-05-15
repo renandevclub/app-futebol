@@ -15,6 +15,53 @@ async function getUserProfile(userId) {
   return { role: data.role, username: data.username, full_name: data.full_name, phone: data.phone || null };
 }
 
+async function checkPaymentStatus() {
+  const user = getCurrentUser();
+  if (!user?.id) return null;
+
+  try {
+    const payment = await getPlayerPaymentStatus(user.id);
+    if (!payment) return null;
+
+    if (!payment.confirmed && window.location.pathname.endsWith('payment.html')) {
+      window.location.href = window.location.pathname.includes('/pages/') ? 'welcome.html' : 'pages/welcome.html';
+      return payment;
+    }
+
+    if (payment.confirmed === true && payment.payment_status !== 'paid') {
+      if (!window.location.pathname.endsWith('payment.html')) {
+        const result = await FMModal.show({
+          type: 'admin',
+          title: 'Pagamento pendente',
+          message: 'Você está confirmado para o jogo, mas ainda não realizou o pagamento da coleta.',
+          closeOnBackdrop: false,
+          closeOnEsc: false,
+          closeButton: false,
+          actions: [
+            {
+              id: 'pay',
+              label: 'Ir para pagamento',
+              variant: 'primary',
+              value: true,
+            },
+          ],
+        });
+
+        if (result?.action === 'pay') {
+          window.location.href = window.location.pathname.includes('/pages/') ? 'payment.html' : 'pages/payment.html';
+        }
+      }
+    }
+
+    return payment;
+  } catch (error) {
+    console.error('Erro ao checar status de pagamento:', error);
+    return null;
+  }
+}
+
+window.checkPaymentStatus = checkPaymentStatus;
+
 /**
  * Verifica se o usuário logado é visitante.
  */
@@ -151,6 +198,8 @@ if (typeof window !== 'undefined') {
 
         const currentUser = await checkAccess();
         if (!currentUser) return;
+
+        await checkPaymentStatus();
 
         // Esconder elementos admin-only
         document.querySelectorAll('[data-admin-only]').forEach((element) => {
