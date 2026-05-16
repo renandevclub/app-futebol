@@ -287,10 +287,23 @@
   border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.pix-button:hover {
-  transform: translateY(-2px);
+.pix-button:not(.is-disabled) {
+  animation: buttonPulse 2.5s infinite ease-in-out;
+}
+
+.pix-button:not(.is-disabled):hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.01);
+  filter: brightness(1.1);
+}
+
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
 }
 
 .pix-button.is-loading {

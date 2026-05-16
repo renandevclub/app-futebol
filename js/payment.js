@@ -1,5 +1,7 @@
 (async function () {
-  const DEADLINE = new Date("2026-05-17T23:59:59-03:00");
+  // Fallback, será sobrescrito pelo banco
+  let DEADLINE = new Date("2026-05-18T22:00:00-03:00");
+  let countdownInterval = null;
 
   const alertEl = document.getElementById("payment-alert");
   const countdownBox = document.querySelector(".countdown-box");
@@ -7,7 +9,9 @@
   const hoursEl = document.getElementById("countdown-hours");
   const minutesEl = document.getElementById("countdown-minutes");
   const secondsEl = document.getElementById("countdown-seconds");
-  const button = document.getElementById("pix-button");
+  const btnEarly = document.getElementById("btn-pix-early");
+  const btnRegular = document.getElementById("btn-pix-regular");
+  const btnGoalkeeper = document.getElementById("btn-pix-goalkeeper");
 
   function pad(value) {
     return String(value).padStart(2, "0");
@@ -22,7 +26,7 @@
 
   function setExpiredState() {
     if (alertEl) {
-      alertEl.textContent = "Valor atualizado: R$ 15,00";
+      alertEl.textContent = "Prazo promocional encerrado";
       alertEl.classList.add("is-expired");
     }
 
@@ -33,6 +37,15 @@
     }
 
     setCountdown(0, 0, 0, 0);
+
+    if (btnEarly && !btnEarly.classList.contains("is-disabled")) {
+      btnEarly.classList.add("is-disabled");
+      btnEarly.removeAttribute("href");
+      btnEarly.style.opacity = "0.4";
+      btnEarly.style.pointerEvents = "none";
+      const sub = btnEarly.querySelector("span:last-child");
+      if (sub) sub.textContent = "Encerrado";
+    }
   }
 
   function updateCountdown() {
@@ -58,32 +71,35 @@
     setCountdown(days, hours, minutes, seconds);
   }
 
-  function renderPaymentButton(paymentLink) {
-    if (!button) return;
+  function setupPaymentButton(buttonEl, link) {
+    if (!buttonEl) return;
 
-    if (!paymentLink) {
-      button.classList.add("is-disabled");
-      button.removeAttribute("href");
-      button.setAttribute("aria-disabled", "true");
-      const text = button.querySelector(".pix-button-text");
-      if (text) text.textContent = "Link do Pix indisponível";
+    if (!link) {
+      buttonEl.classList.add("is-disabled");
+      buttonEl.removeAttribute("href");
+      buttonEl.setAttribute("aria-disabled", "true");
+      buttonEl.style.opacity = "0.5";
+      buttonEl.style.pointerEvents = "none";
+      const text = buttonEl.querySelector(".pix-button-text");
+      if (text) text.textContent = "Indisponível";
       return;
     }
 
-    button.setAttribute("href", paymentLink);
-    button.addEventListener("click", function (event) {
-      if (!paymentLink) {
-        event.preventDefault();
-        return;
-      }
-
-      const text = button.querySelector(".pix-button-text");
-      button.classList.add("is-loading");
-      button.setAttribute("aria-busy", "true");
-      if (text) text.textContent = "Abrindo Pix...";
+    buttonEl.setAttribute("href", link);
+    buttonEl.addEventListener("click", function (event) {
+      event.preventDefault();
+      
+      const textEl = buttonEl.querySelector(".pix-button-text");
+      const originalText = textEl ? textEl.textContent : "";
+      
+      buttonEl.classList.add("is-loading");
+      buttonEl.setAttribute("aria-busy", "true");
+      if (textEl) textEl.textContent = "Abrindo...";
 
       window.setTimeout(function () {
-        window.location.href = paymentLink;
+        buttonEl.classList.remove("is-loading");
+        if (textEl) textEl.textContent = originalText;
+        window.location.href = link;
       }, 450);
     });
   }
@@ -106,16 +122,36 @@
       FMModal.success("Pagamento já registrado. Obrigado!");
     }
 
-    const paymentLink = await getPaymentLink();
-    renderPaymentButton(paymentLink);
+    const links = await getPaymentLinks();
+    
+    // Atualizar data limite vinda do banco
+    if (links['payment_early_enabled_until']) {
+      DEADLINE = new Date(links['payment_early_enabled_until']);
+    }
+
+    // Configura botões de acordo com o status atual
+    const now = new Date();
+    if (now.getTime() > DEADLINE.getTime()) {
+      setupPaymentButton(btnEarly, null); // Expired
+      setExpiredState();
+    } else {
+      setupPaymentButton(btnEarly, links['payment_link_early_player']);
+    }
+
+    setupPaymentButton(btnRegular, links['payment_link_regular_player']);
+    setupPaymentButton(btnGoalkeeper, links['payment_link_goalkeeper']);
+    
+    updateCountdown();
+    countdownInterval = window.setInterval(updateCountdown, 1000);
+
   } catch (error) {
     console.error("Erro ao carregar dados de pagamento:", error);
     if (alertEl) {
-      alertEl.textContent = "Erro ao carregar o link de pagamento. Tente novamente mais tarde.";
+      alertEl.textContent = "Erro ao carregar os dados de pagamento. Tente novamente mais tarde.";
     }
-    renderPaymentButton(null);
+    setupPaymentButton(btnEarly, null);
+    setupPaymentButton(btnRegular, null);
+    setupPaymentButton(btnGoalkeeper, null);
   }
 
-  updateCountdown();
-  window.setInterval(updateCountdown, 1000);
 })();

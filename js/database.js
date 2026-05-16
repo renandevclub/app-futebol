@@ -292,6 +292,50 @@ async function getProfileByAuthId(authId) {
     return users.find(user => user.id === authId || user.auth_id === authId) || null;
 }
 
+async function updatePlayerPaymentStatus(authId, updates) {
+    await initDB();
+    const client = getSupabaseClient();
+    if (!client) return false;
+
+    try {
+        const { error } = await client
+            .from('fm_profiles')
+            .update(updates)
+            .eq('auth_id', authId);
+
+        if (error) {
+            console.error('Erro ao atualizar payment status:', error);
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Erro ao atualizar payment status:', error);
+        return false;
+    }
+}
+
+async function updatePlayerPaymentStatusByUsername(username, updates) {
+    await initDB();
+    const client = getSupabaseClient();
+    if (!client) return false;
+
+    try {
+        const { error } = await client
+            .from('fm_profiles')
+            .update(updates)
+            .eq('username', username);
+
+        if (error) {
+            console.error('Erro ao atualizar payment status por username:', error);
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Erro ao atualizar payment status por username:', error);
+        return false;
+    }
+}
+
 async function getPlayerPaymentStatus(authUserId) {
     await initDB();
 
@@ -310,22 +354,28 @@ async function getPlayerPaymentStatus(authUserId) {
     return null;
 }
 
-async function getPaymentLink() {
+async function getPaymentLinks() {
     await initDB();
 
-    const remoteSetting = await runSupabaseQuery(async (client) => {
+    const remoteSettings = await runSupabaseQuery(async (client) => {
         const { data, error } = await client
             .from('settings')
-            .select('value')
-            .eq('key', 'payment_link')
-            .maybeSingle();
+            .select('key, value')
+            .in('key', ['payment_link_early_player', 'payment_link_regular_player', 'payment_link_goalkeeper', 'payment_early_enabled_until']);
 
         if (error) throw error;
-        return data || null;
+        
+        const links = {};
+        if (data) {
+            data.forEach(item => {
+                links[item.key] = item.value;
+            });
+        }
+        return links;
     }, undefined);
 
-    if (remoteSetting !== undefined) return remoteSetting?.value || null;
-    return null;
+    if (remoteSettings !== undefined) return remoteSettings;
+    return {};
 }
 
 async function addUser(user) {

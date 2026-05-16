@@ -130,15 +130,52 @@
           <span class="pix-badge">Seguro e r&aacute;pido</span>
         </div>
 
-        <a
-          id="pix-button"
-          class="btn btn-primary pix-button"
-          href="https://nubank.com.br/cobrar/zs3gz/6a05f454-cb60-45d8-89cd-2454a93a85dd"
-          rel="noopener noreferrer"
-        >
-          <span class="pix-button-icon">&#128176;</span>
-          <span class="pix-button-text">Pagar via Pix</span>
-        </a>
+        <div class="pix-buttons-container" style="display:flex; flex-direction:column; gap:12px; margin-top:18px;">
+          <!-- Botão 1: Antecipado -->
+          <a
+            id="btn-pix-early"
+            class="btn btn-primary pix-button"
+            href="#"
+            rel="noopener noreferrer"
+            style="margin-top:0; min-height:64px; flex-direction:row; justify-content:flex-start; padding:0 20px; gap:15px; text-align:left;"
+          >
+            <span class="pix-button-icon" style="font-size:1.4rem;">&#128176;</span>
+            <div style="display:flex; flex-direction:column;">
+              <span class="pix-button-text" style="font-size:1rem;">Jogador (Antecipado) &mdash; R$ 10,00</span>
+              <span style="font-size:0.75rem; opacity:0.8; margin-top:2px; text-transform:uppercase; font-weight:700;">Até o prazo</span>
+            </div>
+          </a>
+
+          <!-- Botão 2: Normal -->
+          <a
+            id="btn-pix-regular"
+            class="btn btn-primary pix-button"
+            href="#"
+            rel="noopener noreferrer"
+            style="margin-top:0; min-height:64px; flex-direction:row; justify-content:flex-start; padding:0 20px; gap:15px; text-align:left; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); color:var(--text-main);"
+          >
+            <span class="pix-button-icon" style="font-size:1.4rem;">&#9917;</span>
+            <div style="display:flex; flex-direction:column;">
+              <span class="pix-button-text" style="font-size:1rem;">Jogador (Normal) &mdash; R$ 15,00</span>
+              <span style="font-size:0.75rem; opacity:0.6; margin-top:2px; text-transform:uppercase; font-weight:700;">Após o prazo</span>
+            </div>
+          </a>
+
+          <!-- Botão 3: Goleiro -->
+          <a
+            id="btn-pix-goalkeeper"
+            class="btn btn-primary pix-button"
+            href="#"
+            rel="noopener noreferrer"
+            style="margin-top:0; min-height:64px; flex-direction:row; justify-content:flex-start; padding:0 20px; gap:15px; text-align:left; background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); color:var(--text-main);"
+          >
+            <span class="pix-button-icon" style="font-size:1.4rem;">&#129492;</span>
+            <div style="display:flex; flex-direction:column;">
+              <span class="pix-button-text" style="font-size:1rem;">Goleiro &mdash; R$ 5,00</span>
+              <span style="font-size:0.75rem; opacity:0.6; margin-top:2px; text-transform:uppercase; font-weight:700;">Valor Fixo</span>
+            </div>
+          </a>
+        </div>
 
         <footer class="payment-note">
           <p>Quem puder j&aacute; vai pagando pra ajudar na organiza&ccedil;&atilde;o &#128591;&#9917;</p>
